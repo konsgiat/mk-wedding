@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>WishWall · Κωνσταντίνος & Μαρία</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --lilac:#c4a0d8;--lilac-deep:#9b72bb;--lilac-dark:#7c4fa0;
+    --lilac-pale:#f0e6fa;--lilac-mid:#dfc8f0;--text:#3d2560;--muted:#9b82b8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:linear-gradient(160deg,#faf4ff 0%,#f0e6fa 45%,#e0cdf5 100%);min-height:100vh;color:var(--text);overflow-x:hidden;}
+
+  header{text-align:center;padding:48px 20px 28px;}
+  header::after{content:'';display:block;width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--lilac),transparent);margin:22px auto 0;}
+  .header-label{font-size:.68rem;letter-spacing:5px;text-transform:uppercase;color:var(--lilac-deep);font-weight:300;margin-bottom:10px;}
+  .header-title{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:400;color:var(--lilac-dark);letter-spacing:3px;margin-bottom:6px;}
+  .header-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--lilac-deep);font-weight:300;font-style:italic;}
+
+  .session-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);border:1px solid rgba(196,160,216,.35);border-radius:50px;padding:7px 18px;font-size:.78rem;color:var(--lilac-dark);margin-top:14px;cursor:pointer;transition:all .2s;}
+  .session-badge:hover{background:rgba(255,255,255,.9);}
+  .session-dot{width:8px;height:8px;border-radius:50%;background:#6dbf67;flex-shrink:0;}
+
+  main{max-width:960px;margin:0 auto;padding:0 20px 80px;}
+
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding:0 20px 20px;margin-bottom:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{flex-shrink:0;padding:10px 22px;border-radius:50px;border:1.5px solid var(--lilac-mid);background:rgba(255,255,255,.6);cursor:pointer;font-size:.75rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .25s;font-weight:400;}
+  .tab:hover{background:rgba(255,255,255,.9);color:var(--lilac-dark);}
+  .tab.active{background:linear-gradient(135deg,var(--lilac),var(--lilac-deep));color:#fff;border-color:transparent;box-shadow:0 4px 18px rgba(155,114,187,.4);}
+
+  .panel{display:none;margin-bottom:32px;}
+  .panel.active{display:block;animation:fadeUp .3s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .form-card{background:rgba(255,255,255,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:32px;border:1.5px solid rgba(180,130,220,.35);padding:44px 36px 40px;box-shadow:0 8px 40px rgba(130,80,190,.1);margin-bottom:40px;}
+  .form-label{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--lilac-deep);font-weight:400;margin-bottom:8px;display:block;}
+  .form-input,.form-textarea{width:100%;padding:12px 18px;border:1.5px solid var(--lilac-mid);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--text);outline:none;background:var(--lilac-pale);transition:border-color .2s;}
+  .form-textarea{border-radius:16px;resize:vertical;min-height:110px;padding:14px 18px;line-height:1.6;}
+  .form-input:focus,.form-textarea:focus{border-color:var(--lilac-deep);}
+  .form-row{margin-bottom:20px;}
+
+  .submit-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--lilac),var(--lilac-deep),var(--lilac-dark));color:#fff;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:4px;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all .3s;box-shadow:0 6px 24px rgba(155,114,187,.4);margin-top:8px;}
+  .submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(155,114,187,.55);}
+  .submit-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+  /* Video */
+  #videoModal{position:fixed;inset:0;z-index:950;background:rgba(10,4,25,.99);display:none;flex-direction:column;align-items:center;justify-content:space-between;gap:0;padding:0;}
+  #videoModal.open{display:flex;}
+  .vid-controls{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:320px;padding:20px 16px 36px;flex-shrink:0;}
+  .vid-slot{width:54px;height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .vid-slot-center{flex:1;display:flex;align-items:center;justify-content:center;}
+  .vid-shutter{width:78px;height:78px;border-radius:50%;background:#fff;border:5px solid rgba(196,160,216,.75);box-shadow:0 0 0 3px rgba(255,255,255,.25),0 8px 32px rgba(0,0,0,.45);cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;flex-shrink:0;}
+  .vid-shutter:active{transform:scale(.88);box-shadow:0 0 0 3px rgba(255,255,255,.2),0 4px 16px rgba(0,0,0,.35);}
+  .vid-shutter::after{content:'';position:absolute;inset:7px;border-radius:50%;background:var(--lilac-deep);transition:border-radius .25s,inset .25s,background .25s;}
+  .vid-shutter.is-stop{border-color:rgba(220,40,70,.8);animation:recPulse 1.2s ease-in-out infinite;}
+  .vid-shutter.is-stop::after{inset:17px;border-radius:4px;background:#d02050;}
+  @keyframes recPulse{0%,100%{box-shadow:0 0 0 3px rgba(255,255,255,.2),0 0 0 0 rgba(196,160,216,.5);}60%{box-shadow:0 0 0 3px rgba(255,255,255,.2),0 0 0 14px rgba(196,160,216,.0);}}
+  .vid-side{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.28);color:#fff;font-size:1.3rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+  .vid-side:active{transform:scale(.88);}
+  .vid-cancel{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);font-size:1.1rem;font-weight:700;}
+  .vid-cancel:hover{background:rgba(255,255,255,.18);}
+  .rec-indicator{display:none;align-items:center;gap:8px;background:rgba(220,0,80,.85);backdrop-filter:blur(4px);border-radius:50px;padding:5px 14px;color:#fff;font-size:.75rem;letter-spacing:1px;}
+  .rec-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1s infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+
+  /* Voice */
+  .voice-visualizer{background:linear-gradient(135deg,rgba(124,79,160,.08),rgba(155,114,187,.12));border:1px solid rgba(196,160,216,.25);border-radius:16px;padding:28px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:4px;min-height:100px;}
+  .bar-vis{width:5px;border-radius:3px;background:var(--lilac);animation:grow 1.2s ease-in-out infinite;}
+  .bar-vis:nth-child(2n){animation-delay:.15s;} .bar-vis:nth-child(3n){animation-delay:.3s;} .bar-vis:nth-child(4n){animation-delay:.45s;}
+  @keyframes grow{0%,100%{height:8px;}50%{height:48px;}}
+  .voice-timer{text-align:center;font-family:'Cinzel',serif;font-size:1.6rem;color:var(--lilac-dark);letter-spacing:4px;margin-bottom:16px;}
+
+  /* Wall */
+  .wall-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+  .wall-title{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--lilac-dark);letter-spacing:2px;}
+  .wall-count{background:rgba(196,160,216,.2);border-radius:50px;padding:6px 16px;font-size:.8rem;color:var(--lilac-deep);border:1px solid rgba(196,160,216,.3);}
+  .wishes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+  .wish-card{background:rgba(255,255,255,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:32px;border:1.5px solid rgba(180,130,220,.35);overflow:hidden;box-shadow:0 4px 20px rgba(130,80,190,.08);transition:transform .3s,box-shadow .3s;animation:fadeUp .4s ease;display:flex;flex-direction:column;position:relative;}
+  .wish-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(130,80,190,.18);}
+  .wish-type-bar{padding:8px 16px;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;}
+  .wish-type-text{background:linear-gradient(90deg,rgba(196,160,216,.2),transparent);color:var(--lilac-deep);}
+  .wish-type-video{background:linear-gradient(90deg,rgba(220,60,120,.15),transparent);color:#c03070;}
+  .wish-type-voice{background:linear-gradient(90deg,rgba(80,160,240,.15),transparent);color:#2060c0;}
+  .wish-body{padding:16px 18px;flex:1;}
+  .wish-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);line-height:1.6;font-style:italic;margin-bottom:12px;}
+  .wish-video,.wish-img{width:100%;border-radius:10px;margin-bottom:10px;}
+  .wish-video{background:#0a0418;}
+  .wish-footer{padding:12px 18px;border-top:1px solid rgba(196,160,216,.2);display:flex;align-items:center;justify-content:space-between;}
+  .wish-author{font-weight:500;font-size:.85rem;color:var(--lilac-dark);}
+  .wish-time{font-size:.72rem;color:var(--muted);}
+  .wish-delete{background:none;border:none;cursor:pointer;color:rgba(200,100,130,.4);font-size:.9rem;transition:color .2s;padding:4px 8px;}
+  .wish-delete:hover{color:rgba(200,60,90,.9);}
+  .wish-mine-badge{position:absolute;top:38px;right:12px;background:rgba(124,79,160,.75);border-radius:50px;padding:2px 9px;font-size:.6rem;color:#fff;letter-spacing:1.5px;font-family:'DM Sans',sans-serif;}
+  .slideshow-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:50px;border:1.5px solid var(--lilac);background:rgba(255,255,255,.6);font-size:.78rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--lilac-dark);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;}
+  .slideshow-btn:hover{background:var(--lilac-pale);transform:translateY(-2px);}
+  .empty-wall{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1;}
+  .empty-wall .big-icon{font-size:3.5rem;display:block;margin-bottom:16px;opacity:.5;}
+
+  /* Slideshow */
+  .slideshow-overlay{position:fixed;inset:0;z-index:2000;background:rgba(8,2,22,.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;}
+  .slideshow-overlay.open{display:flex;}
+  .ss-close{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:50%;width:42px;height:42px;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .ss-close:hover{background:rgba(255,255,255,.22);}
+  .ss-title{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:4px;color:rgba(196,160,216,.7);text-transform:uppercase;margin-bottom:32px;}
+  .ss-content{max-width:680px;width:100%;text-align:center;animation:ssSlide .6s ease;}
+  @keyframes ssSlide{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:scale(1);}}
+  .ss-wish-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#fff;line-height:1.5;font-style:italic;margin-bottom:28px;text-shadow:0 2px 20px rgba(196,160,216,.3);}
+  .ss-author{font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:4px;color:var(--lilac);text-transform:uppercase;}
+  .ss-nav{display:flex;gap:16px;margin-top:36px;align-items:center;}
+  .ss-btn{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .ss-btn:hover{background:rgba(255,255,255,.2);}
+  .ss-counter{color:rgba(255,255,255,.5);font-size:.82rem;letter-spacing:2px;}
+  .ss-dots{display:flex;gap:6px;margin-top:20px;}
+  .ss-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s;cursor:pointer;}
+  .ss-dot.active{background:var(--lilac);width:18px;border-radius:3px;}
+
+  /* Session modal */
+  .modal-overlay{position:fixed;inset:0;z-index:900;background:rgba(20,8,40,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:rgba(255,255,255,.96);border-radius:24px;padding:40px 36px;max-width:400px;width:100%;box-shadow:0 20px 80px rgba(100,60,150,.25);text-align:center;animation:fadeUp .3s ease;}
+  .modal-box h2{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--lilac-dark);margin-bottom:8px;letter-spacing:2px;}
+  .modal-box p{font-size:.85rem;color:var(--muted);margin-bottom:24px;}
+  .modal-input{width:100%;padding:12px 18px;border:1.5px solid var(--lilac-mid);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--text);outline:none;text-align:center;margin-bottom:16px;background:var(--lilac-pale);transition:border-color .2s;}
+  .modal-input:focus{border-color:var(--lilac-deep);}
+  .modal-submit{width:100%;padding:13px;background:linear-gradient(135deg,var(--lilac),var(--lilac-deep));color:#fff;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.85rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(155,114,187,.35);}
+  .modal-submit:hover{transform:translateY(-2px);}
+
+  .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--lilac-dark);color:#fff;padding:12px 28px;border-radius:50px;font-size:.82rem;letter-spacing:1px;box-shadow:0 8px 32px rgba(100,60,150,.4);transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:3000;white-space:nowrap;}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+
+  .back-home{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);border:1px solid rgba(196,160,216,.35);border-radius:50px;padding:8px 20px;font-size:.78rem;color:var(--lilac-dark);text-decoration:none;transition:all .2s;margin-bottom:16px;}
+  .back-home:hover{background:rgba(255,255,255,.9);transform:translateX(-3px);}
+
+  /* ── PHOTOS ── */
+  .upload-zone{border:2px dashed var(--lilac);border-radius:32px;padding:52px 36px;text-align:center;cursor:pointer;transition:all .35s;background:rgba(255,255,255,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:relative;overflow:hidden;margin-bottom:40px;}
+  .upload-zone::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(196,160,216,.18),transparent 70%);pointer-events:none;}
+  .upload-zone:hover,.upload-zone.dragover{border-color:var(--lilac-deep);background:rgba(255,255,255,.75);transform:scale(1.01);box-shadow:0 8px 40px rgba(155,114,187,.2);}
+  #fileInput{display:none;}
+  .upload-icon{font-size:3rem;margin-bottom:16px;display:block;animation:bob 3s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .upload-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--lilac-dark);margin-bottom:8px;letter-spacing:2px;}
+  .upload-hint{font-size:.85rem;color:var(--muted);font-weight:300;margin-bottom:20px;}
+  .btn-primary{display:inline-block;background:linear-gradient(135deg,var(--lilac),var(--lilac-deep));color:#fff;border:none;border-radius:50px;padding:12px 36px;font-size:.82rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .3s;box-shadow:0 4px 20px rgba(155,114,187,.35);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(155,114,187,.5);}
+  .btn-outline{display:inline-block;background:rgba(255,255,255,.8);color:var(--lilac-dark);border:1.5px solid var(--lilac);border-radius:50px;padding:12px 28px;font-size:.82rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .3s;margin-left:10px;}
+  .btn-outline:hover{background:var(--lilac-pale);transform:translateY(-2px);}
+  .progress-wrap{margin-top:20px;display:none;background:rgba(196,160,216,.2);border-radius:50px;height:6px;overflow:hidden;}
+  .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--lilac),var(--lilac-deep));border-radius:50px;transition:width .3s;}
+  .progress-label{font-size:.75rem;color:var(--muted);margin-top:8px;display:none;}
+  .stats-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+  .stat-item{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(196,160,216,.3);border-radius:50px;padding:8px 18px;font-size:.8rem;color:var(--lilac-dark);}
+  .stat-num{font-weight:500;font-size:.95rem;}
+  .filter-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .filter-tab{padding:7px 18px;border-radius:50px;border:1.5px solid var(--lilac-mid);background:transparent;cursor:pointer;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .25s;}
+  .filter-tab.active,.filter-tab:hover{background:var(--lilac-deep);color:#fff;border-color:var(--lilac-deep);}
+  .gallery-grid{columns:3 220px;gap:16px;}
+  .photo-card{break-inside:avoid;margin-bottom:16px;position:relative;border-radius:16px;overflow:hidden;cursor:pointer;animation:fadeUp .5s ease forwards;box-shadow:0 4px 20px rgba(100,60,150,.12);transition:transform .3s,box-shadow .3s;}
+  .photo-card:hover{transform:scale(1.02);box-shadow:0 10px 40px rgba(100,60,150,.22);}
+  .photo-card img{width:100%;display:block;background:var(--lilac-pale);}
+  .photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(60,20,100,.78) 0%,transparent 55%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;}
+  .photo-card:hover .photo-overlay{opacity:1;}
+  .photo-name{color:#fff;font-size:.82rem;font-weight:500;}
+  .photo-time{color:rgba(255,255,255,.7);font-size:.72rem;margin-top:2px;}
+  .photo-actions{display:flex;gap:8px;margin-top:10px;}
+  .p-btn{background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.35);border-radius:50px;color:#fff;padding:5px 12px;font-size:.72rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+  .p-btn:hover{background:rgba(255,255,255,.35);}
+  .p-btn.del{background:rgba(220,50,80,.3);border-color:rgba(220,50,80,.5);}
+  .p-btn.del:hover{background:rgba(220,50,80,.6);}
+  .owner-badge{position:absolute;top:10px;right:10px;background:rgba(124,79,160,.82);backdrop-filter:blur(4px);border-radius:50px;padding:3px 10px;font-size:.63rem;color:#fff;letter-spacing:1.5px;font-family:'DM Sans',sans-serif;}
+  .empty-state{text-align:center;padding:60px 20px;color:var(--muted);column-span:all;}
+  .empty-icon{font-size:3.5rem;margin-bottom:16px;opacity:.6;display:block;}
+
+  /* Photo Lightbox */
+  .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(20,8,40,.93);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:20px;}
+  .lightbox.open{display:flex;}
+  .lb-content{position:relative;max-width:90vw;max-height:90vh;}
+  .lb-img{max-width:100%;max-height:85vh;border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,.6);display:block;}
+  .lb-close{position:absolute;top:-16px;right:-16px;width:40px;height:40px;border-radius:50%;background:var(--lilac-deep);border:none;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .lb-close:hover{background:var(--lilac-dark);transform:scale(1.1);}
+  .lb-info{position:absolute;bottom:-44px;left:0;right:0;text-align:center;color:rgba(255,255,255,.7);font-size:.82rem;}
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .lb-nav:hover{background:rgba(255,255,255,.28);}
+  .lb-prev{left:-60px;} .lb-next{right:-60px;}
+
+  /* Photo Camera */
+  #cameraModal{position:fixed;inset:0;z-index:950;background:rgba(10,4,25,.99);display:none;flex-direction:column;align-items:center;justify-content:space-between;gap:0;padding:0;}
+  #cameraModal.open{display:flex;}
+  .cam-controls{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:320px;padding:20px 16px 36px;flex-shrink:0;}
+  .cam-shutter{width:78px;height:78px;border-radius:50%;background:#fff;border:5px solid rgba(196,160,216,.75);box-shadow:0 0 0 3px rgba(255,255,255,.25),0 8px 32px rgba(0,0,0,.45);cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;flex-shrink:0;}
+  .cam-shutter:active{transform:scale(.88);box-shadow:0 0 0 3px rgba(255,255,255,.2),0 4px 16px rgba(0,0,0,.35);}
+  .cam-shutter::after{content:'';position:absolute;inset:7px;border-radius:50%;background:rgba(255,255,255,.92);}
+  .cam-side-btn{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border:1.5px solid rgba(255,255,255,.3);color:#fff;font-size:1.3rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cam-side-btn:active{background:rgba(255,255,255,.3);transform:scale(.88);}
+
+  @media(max-width:600px){.form-card{padding:32px 22px 28px;}.wishes-grid{grid-template-columns:1fr;}.gallery-grid{columns:2 140px;}.lb-prev{left:-10px;}.lb-next{right:-10px;}.btn-outline{margin-left:0;margin-top:10px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-home" href="wedding-invitation-KM.html">&#8592; &#913;&#961;&#967;&#953;&#954;&#942;</a>
+  <div class="header-label">Digital Guestbook &amp; Gallery</div>
+  <div class="header-title">WishWall</div>
+  <div class="header-sub">&#922;&#969;&#957;&#963;&#964;&#945;&#957;&#964;&#943;&#957;&#959;&#962; &#9825; &#924;&#945;&#961;&#943;&#945; &middot; 24 &#924;&#945;&#970;&#959;&#965; 2026</div>
+  <div>
+    <div class="session-badge" onclick="changeSession()" title="Click to change name">
+      <div class="session-dot"></div>
+      <span id="sessionLabel">Click to sign in</span>
+      <span style="opacity:.45;font-size:.7rem;">&#9998;</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" onclick="switchTab('text',this)">&#9997;&#65039; Message</button>
+  <button class="tab" onclick="switchTab('photos',this)">&#128248; Photos</button>
+  <button class="tab" onclick="switchTab('video',this)">&#127909; Video Wish</button>
+  <button class="tab" onclick="switchTab('voice',this)">&#127897; Voice Note</button>
+  <button class="tab" onclick="switchTab('wall',this)">&#128140; The Wall</button>
+</nav>
+
+<main>
+  <!-- TEXT -->
+  <div class="panel active" id="panel-text">
+    <div class="form-card">
+      <div style="text-align:center;margin-bottom:28px;">
+        <div style="font-size:2.4rem;margin-bottom:10px;">&#9997;&#65039;</div>
+        <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--lilac-dark);letter-spacing:2px;margin-bottom:6px;">Leave a Message</div>
+        <div style="font-size:.85rem;color:var(--muted);">Share your heartfelt wishes for the happy couple</div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" id="txtName" type="text" placeholder="Your name" maxlength="50"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Your Message</label>
+        <textarea class="form-textarea" id="txtMsg" placeholder="Write something beautiful..." maxlength="500"></textarea>
+        <div style="text-align:right;font-size:.72rem;color:var(--muted);margin-top:4px;" id="charCount">0 / 500</div>
+      </div>
+      <button class="submit-btn" onclick="submitText()">&#128140; &nbsp; Send Your Wish</button>
+    </div>
+  </div>
+
+  <!-- PHOTOS -->
+  <div class="panel" id="panel-photos">
+    <div class="upload-zone" id="uploadZone">
+      <span class="upload-icon">&#128248;</span>
+      <div class="upload-title">Share Your Moments</div>
+      <div class="upload-hint">Drag &amp; drop photos here, or use the buttons below</div>
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;">
+        <button class="btn-primary" onclick="triggerUpload()">&#10022; Upload Photos</button>
+        <button class="btn-outline" onclick="openPhotoCamera()">&#128247; Take Photo</button>
+      </div>
+      <input type="file" id="fileInput" multiple accept="image/*" onchange="handleFiles(this.files)"/>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel"></div>
+    </div>
+    <div class="stats-bar">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div class="stat-item">&#128444;&#65039; <span class="stat-num" id="photoCount">0</span> photos</div>
+        <div class="stat-item">&#128101; <span class="stat-num" id="guestCount">0</span> guests</div>
+      </div>
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" onclick="filterGallery('all',this)">All</button>
+      </div>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="panel" id="panel-video">
+    <div class="form-card">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:2.4rem;margin-bottom:10px;">&#127909;&#65039;</div>
+        <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--lilac-dark);letter-spacing:2px;margin-bottom:6px;">Record a Video Wish</div>
+        <div style="font-size:.85rem;color:var(--muted);">Up to 60 seconds &mdash; they&apos;ll watch it again and again</div>
+      </div>
+      <div id="vidOpenWrap" style="text-align:center;margin-bottom:24px;">
+        <button class="submit-btn" style="width:auto;padding:14px 40px;" onclick="openVideoModal()">&#127909;&#65039; &nbsp; Open Camera</button>
+      </div>
+      <div id="vidPlaybackWrap" style="display:none;margin-bottom:20px;">
+        <video id="videoPlayback" controls style="width:100%;border-radius:12px;max-height:320px;display:block;margin-bottom:14px;"></video>
+        <div style="text-align:center;">
+          <button onclick="discardVideo()" style="background:none;border:1.5px solid rgba(220,50,70,.4);border-radius:50px;padding:8px 22px;color:#c03050;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">&#10005; &nbsp; Discard &amp; Re-record</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" id="vidName" type="text" placeholder="Your name" maxlength="50"/>
+      </div>
+      <button class="submit-btn" id="vidSubmitBtn" onclick="submitVideo()" disabled>&#127909;&#65039; &nbsp; Share Video Wish</button>
+    </div>
+  </div>
+
+  <!-- VOICE -->
+  <div class="panel" id="panel-voice">
+    <div class="form-card">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:2.4rem;margin-bottom:10px;">&#127897;&#65039;</div>
+        <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--lilac-dark);letter-spacing:2px;margin-bottom:6px;">Record a Voice Note</div>
+        <div style="font-size:.85rem;color:var(--muted);">Your voice will be part of their story forever</div>
+      </div>
+      <div class="voice-visualizer" id="voiceVisualizer">
+        <div style="text-align:center;color:var(--muted);font-size:.9rem;">Press record to begin</div>
+      </div>
+      <div class="voice-timer" id="voiceTimer" style="display:none;">0:00</div>
+      <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+        <button class="rec-btn rec-start" style="flex:1;" id="voiceStartBtn" onclick="startVoice()">&#127897; Record</button>
+        <button class="rec-btn rec-stop" style="flex:1;display:none;" id="voiceStopBtn" onclick="stopVoice()">&#9209; Stop</button>
+      </div>
+      <div id="voicePlayback" style="display:none;margin-bottom:16px;">
+        <audio id="voiceAudio" controls style="width:100%;"></audio>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" id="voiceName" type="text" placeholder="Your name" maxlength="50"/>
+      </div>
+      <button class="submit-btn" id="voiceSubmitBtn" onclick="submitVoice()" disabled>&#127897;&#65039; &nbsp; Share Voice Wish</button>
+    </div>
+  </div>
+
+  <!-- WALL -->
+  <div class="panel" id="panel-wall">
+    <div class="wall-header">
+      <div class="wall-title">&#128140; All Wishes</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <div class="wall-count" id="wishCount">0 wishes</div>
+        <button class="slideshow-btn" onclick="startSlideshow()">&#9655; &nbsp; Cinematic Reel</button>
+      </div>
+    </div>
+    <div class="wishes-grid" id="wishesGrid"></div>
+  </div>
+</main>
+
+<!-- Video Wish Modal -->
+<div id="videoModal">
+  <div style="position:relative;flex:1;width:100%;min-height:0;overflow:hidden;">
+    <video id="videoPreview" autoplay playsinline muted style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    <div class="rec-indicator" id="recIndicator" style="position:absolute;top:16px;left:16px;"><div class="rec-dot"></div> REC</div>
+    <div id="videoRecTimer" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.9rem;color:#fff;letter-spacing:4px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:50px;padding:4px 16px;display:none;white-space:nowrap;">0:00</div>
+  </div>
+  <div class="vid-controls">
+    <div class="vid-slot">
+      <button class="vid-side vid-cancel" id="recCancelBtn" onclick="closeVideoModal()" title="Cancel">&#10005;</button>
+    </div>
+    <div class="vid-slot-center">
+      <button class="vid-shutter" id="recStartBtn" onclick="startRecording()" title="Start Recording"></button>
+      <button class="vid-shutter is-stop" id="recStopBtn" onclick="stopRecording()" style="display:none;" title="Stop Recording"></button>
+    </div>
+    <div class="vid-slot">
+      <button class="vid-side" id="recFlipBtn" onclick="flipVideoCamera()" style="display:none;" title="Flip Camera"><img src="flip-icon.png" width="28" height="28" alt="flip" style="filter:brightness(0) invert(1);display:block;"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Photo Camera Modal -->
+<div id="cameraModal">
+  <div style="position:relative;flex:1;width:100%;min-height:0;overflow:hidden;">
+    <video id="cameraVideo" autoplay playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+  </div>
+  <canvas id="snapCanvas" style="display:none;"></canvas>
+  <div class="cam-controls">
+    <button class="cam-side-btn" onclick="closePhotoCamera()" title="Cancel">&#10005;</button>
+    <button class="cam-shutter" onclick="snapPhoto()" aria-label="Capture"></button>
+    <button class="cam-side-btn" onclick="flipPhotoCamera()" title="Flip Camera"><img src="flip-icon.png" width="28" height="28" alt="flip" style="filter:brightness(0) invert(1);display:block;"></button>
+  </div>
+</div>
+
+<!-- Photo Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-nav lb-prev" onclick="navLightbox(-1,event)">&#8249;</button>
+  <div class="lb-content">
+    <button class="lb-close" onclick="closeLightbox()">&#10005;</button>
+    <img class="lb-img" id="lbImg" src="" alt=""/>
+    <div class="lb-info" id="lbInfo"></div>
+  </div>
+  <button class="lb-nav lb-next" onclick="navLightbox(1,event)">&#8250;</button>
+</div>
+
+<!-- Slideshow -->
+<div class="slideshow-overlay" id="slideshowOverlay">
+  <button class="ss-close" onclick="closeSlideshow()">&#10005;</button>
+  <div class="ss-title">Wishes</div>
+  <div class="ss-content" id="ssContent"></div>
+  <div class="ss-nav">
+    <button class="ss-btn" onclick="ssNav(-1)">&#8249;</button>
+    <span class="ss-counter" id="ssCounter"></span>
+    <button class="ss-btn" onclick="ssNav(1)">&#8250;</button>
+  </div>
+  <div class="ss-dots" id="ssDots"></div>
+</div>
+
+<!-- Session modal -->
+<div class="modal-overlay" id="sessionModal">
+  <div class="modal-box">
+    <div style="font-size:2rem;margin-bottom:12px;">&#128140;</div>
+    <h2>Welcome!</h2>
+    <p>Enter your name to share memories and leave a wish for the couple.</p>
+    <input class="modal-input" id="sessionNameInput" type="text" placeholder="Your name" maxlength="40"/>
+    <button class="modal-submit" onclick="saveSession()">&#10022; &nbsp; Let&apos;s Go &nbsp; &#10022;</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── SESSION ──
+let sessionId   = localStorage.getItem('wwall_sid');
+let sessionName = localStorage.getItem('wwall_name');
+
+if (!sessionId) {
+  sessionId = 'u_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+  localStorage.setItem('wwall_sid', sessionId);
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'wall') loadWishes();
+  if (id === 'photos') loadGallery();
+}
+
+function initSession() {
+  if (!sessionName) {
+    document.getElementById('sessionModal').classList.add('open');
+    setTimeout(() => document.getElementById('sessionNameInput').focus(), 200);
+  } else {
+    document.getElementById('sessionLabel').textContent = 'Signed in as ' + sessionName;
+    ['txtName','vidName','voiceName'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && !el.value) el.value = sessionName;
+    });
+  }
+}
+function saveSession() {
+  const n = document.getElementById('sessionNameInput').value.trim();
+  if (!n) { document.getElementById('sessionNameInput').style.borderColor='#e05'; return; }
+  sessionName = n;
+  localStorage.setItem('wwall_name', n);
+  document.getElementById('sessionLabel').textContent = 'Signed in as ' + n;
+  document.getElementById('sessionModal').classList.remove('open');
+  ['txtName','vidName','voiceName'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.value) el.value = n;
+  });
+  toast('Welcome, ' + n + '!');
+}
+function changeSession() {
+  document.getElementById('sessionNameInput').value = sessionName || '';
+  document.getElementById('sessionModal').classList.add('open');
+  setTimeout(() => document.getElementById('sessionNameInput').focus(), 100);
+}
+document.getElementById('sessionNameInput').addEventListener('keydown', e => { if(e.key==='Enter') saveSession(); });
+
+// ── CONFIG ──
+const CLOUD_NAME    = 'drjceqcfd';
+const UPLOAD_PRESET = 'wedding_unsigned';
+
+// ── STATE ──
+let wishes = [];
+let videoChunks=[], videoStream=null, videoRecorder=null, videoBlob=null;
+let videoFacingMode = 'environment';
+let voiceChunks=[], voiceStream=null, voiceRecorder=null, voiceBlob=null;
+let recTimer=null, recSeconds=0;
+let ssIndex=0;
+let photos = [];
+let activeFilter = 'all';
+let currentLbIndex = 0;
+let photoCameraStream = null;
+let photoFacingMode = 'environment';
+
+// ── HELPERS ──
+function apiHeaders() { return { 'Content-Type': 'application/json', 'X-Session-Id': sessionId }; }
+function toast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+function timeStr(){ return new Date().toLocaleString('el-GR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}); }
+
+// ── CLOUDINARY: wishes ──
+function uploadToCloudinary(fileOrBlob, resourceType, folder) {
+  return new Promise((resolve, reject) => {
+    const fd = new FormData();
+    fd.append('file', fileOrBlob);
+    fd.append('upload_preset', UPLOAD_PRESET);
+    if (folder) fd.append('folder', folder);
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => {
+      if (xhr.status === 200) { const d=JSON.parse(xhr.responseText); resolve({url:d.secure_url,publicId:d.public_id}); }
+      else reject(new Error('Upload failed: ' + xhr.status));
+    };
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.open('POST', 'https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/' + (resourceType||'image') + '/upload');
+    xhr.send(fd);
+  });
+}
+
+// ── CLOUDINARY: photos with progress ──
+function uploadPhotoToCloudinary(fileOrBlob, onProgress) {
+  return new Promise((resolve, reject) => {
+    const fd = new FormData();
+    fd.append('file', fileOrBlob);
+    fd.append('upload_preset', UPLOAD_PRESET);
+    fd.append('folder', 'Images');
+    const xhr = new XMLHttpRequest();
+    if (onProgress) xhr.upload.onprogress = e => { if(e.lengthComputable) onProgress(Math.round(e.loaded/e.total*100)); };
+    xhr.onload = () => {
+      if (xhr.status === 200) { const d=JSON.parse(xhr.responseText); resolve({url:d.secure_url,publicId:d.public_id}); }
+      else reject(new Error('Upload failed: ' + xhr.status));
+    };
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.open('POST', 'https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload');
+    xhr.send(fd);
+  });
+}
+
+// ── WISHES API ──
+async function loadWishes() {
+  try { const res=await fetch('/api/wishes',{headers:apiHeaders()}); wishes=await res.json(); }
+  catch(e) { wishes=[]; }
+  renderWall();
+}
+async function saveWishToServer(data) {
+  const res=await fetch('/api/wishes',{method:'POST',headers:apiHeaders(),body:JSON.stringify(data)});
+  return res.json();
+}
+
+// ── TEXT ──
+document.getElementById('txtMsg').addEventListener('input',function(){
+  document.getElementById('charCount').textContent=this.value.length+' / 500';
+});
+async function submitText(){
+  if(!sessionName){initSession();return;}
+  const name=document.getElementById('txtName').value.trim()||sessionName||'Guest';
+  const msg=document.getElementById('txtMsg').value.trim();
+  if(!msg) return toast('Please write a message first');
+  try {
+    await saveWishToServer({type:'text',name,ownerId:sessionId,ownerName:sessionName,msg,time:timeStr()});
+    document.getElementById('txtMsg').value='';
+    document.getElementById('charCount').textContent='0 / 500';
+    toast('Your wish was sent, '+name+'!');
+    await loadWishes();
+  } catch(e){ toast('Could not send wish. Check your connection.'); }
+}
+
+// ── VIDEO WISH ──
+let captureCanvas=null,captureCtx=null,animFrame=null,audioTrackRef=null,captureVid=null;
+function _cleanupCapture(){
+  if(animFrame){cancelAnimationFrame(animFrame);animFrame=null;}
+  if(captureVid){captureVid.srcObject=null;captureVid.remove();captureVid=null;}
+  captureCanvas=null; captureCtx=null;
+}
+async function openVideoModal(){
+  if(!sessionName){initSession();return;}
+  try{
+    videoStream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:videoFacingMode,width:{ideal:1280},height:{ideal:720},frameRate:{ideal:30}},
+      audio:{echoCancellation:true,noiseSuppression:true}
+    });
+    const pv=document.getElementById('videoPreview');
+    pv.srcObject=videoStream;
+    pv.style.transform=videoFacingMode==='user'?'scaleX(-1)':'scaleX(1)';
+    document.getElementById('recFlipBtn').style.display='flex';
+    document.getElementById('videoModal').classList.add('open');
+  }catch(e){toast('Camera/mic not available.');}
+}
+function closeVideoModal(){
+  if(videoRecorder){videoRecorder.ondataavailable=null;videoRecorder.onstop=null;}
+  if(videoRecorder&&videoRecorder.state!=='inactive') videoRecorder.stop();
+  _cleanupCapture();
+  if(videoStream){videoStream.getTracks().forEach(t=>t.stop());videoStream=null;}
+  if(audioTrackRef){audioTrackRef.stop();audioTrackRef=null;}
+  clearInterval(recTimer); videoChunks=[];
+  document.getElementById('recStartBtn').style.display='block';
+  document.getElementById('recStopBtn').style.display='none';
+  document.getElementById('recFlipBtn').style.display='none';
+  document.getElementById('recIndicator').style.display='none';
+  document.getElementById('videoRecTimer').style.display='none';
+  document.getElementById('videoModal').classList.remove('open');
+}
+async function startRecording(){
+  captureVid=document.createElement('video');
+  captureVid.muted=true; captureVid.playsInline=true;
+  captureVid.setAttribute('playsinline','');
+  captureVid.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0;pointer-events:none;';
+  document.body.appendChild(captureVid);
+  captureVid.srcObject=videoStream;
+  try{await captureVid.play();}catch(_){}
+  if(!captureVid.videoWidth) await new Promise(r=>{captureVid.onloadedmetadata=r;});
+  captureCanvas=document.createElement('canvas');
+  captureCanvas.width=captureVid.videoWidth||1280;
+  captureCanvas.height=captureVid.videoHeight||720;
+  captureCtx=captureCanvas.getContext('2d');
+  (function drawFrame(){
+    if(captureCtx&&captureVid&&captureVid.readyState>=2){
+      captureCtx.save();
+      if(videoFacingMode==='user'){captureCtx.translate(captureCanvas.width,0);captureCtx.scale(-1,1);}
+      try{captureCtx.drawImage(captureVid,0,0,captureCanvas.width,captureCanvas.height);}catch(_){}
+      captureCtx.restore();
+    }
+    animFrame=requestAnimationFrame(drawFrame);
+  })();
+  const canvasStream=captureCanvas.captureStream(30);
+  audioTrackRef=videoStream.getAudioTracks()[0]||null;
+  if(audioTrackRef) canvasStream.addTrack(audioTrackRef);
+  const mime=getMime('video');
+  const recOpts=mime?{mimeType:mime,videoBitsPerSecond:2500000,audioBitsPerSecond:128000}:{};
+  videoRecorder=new MediaRecorder(canvasStream,recOpts);
+  videoChunks=[];
+  videoRecorder.ondataavailable=e=>{if(e.data.size)videoChunks.push(e.data);};
+  videoRecorder.onstop=()=>{
+    _cleanupCapture();
+    videoBlob=new Blob(videoChunks,{type:getMime('video')});
+    document.getElementById('videoModal').classList.remove('open');
+    document.getElementById('recStartBtn').style.display='block';
+    document.getElementById('recStopBtn').style.display='none';
+    document.getElementById('recFlipBtn').style.display='none';
+    document.getElementById('recIndicator').style.display='none';
+    document.getElementById('videoRecTimer').style.display='none';
+    document.getElementById('vidSubmitBtn').disabled=false;
+    document.getElementById('videoPlayback').src=URL.createObjectURL(videoBlob);
+    document.getElementById('vidPlaybackWrap').style.display='block';
+    document.getElementById('vidOpenWrap').style.display='none';
+    toast('Review your video and share when ready!');
+  };
+  videoRecorder.start(100);
+  recSeconds=0; startTimer('videoRecTimer');
+  document.getElementById('recStartBtn').style.display='none';
+  document.getElementById('recStopBtn').style.display='block';
+  document.getElementById('recIndicator').style.display='flex';
+}
+async function flipVideoCamera(){
+  if(!videoStream) return;
+  videoFacingMode=videoFacingMode==='environment'?'user':'environment';
+  const pv=document.getElementById('videoPreview');
+  const wasRecording=videoRecorder&&videoRecorder.state==='recording';
+  try{
+    if(wasRecording){
+      const savedOnStop=videoRecorder.onstop;
+      videoRecorder.onstop=null; videoRecorder.ondataavailable=null;
+      videoRecorder.stop();
+      await new Promise(r=>setTimeout(r,200));
+      videoStream.getVideoTracks().forEach(t=>t.stop());
+      await new Promise(r=>setTimeout(r,150));
+      const nv=await navigator.mediaDevices.getUserMedia({video:{facingMode:videoFacingMode,width:{ideal:1280},height:{ideal:720},frameRate:{ideal:30}},audio:false});
+      videoStream=nv; pv.srcObject=nv; pv.play().catch(()=>{});
+      const cs=new MediaStream();
+      nv.getVideoTracks().forEach(t=>cs.addTrack(t));
+      if(audioTrackRef&&audioTrackRef.readyState!=='ended') cs.addTrack(audioTrackRef);
+      const mime=getMime('video');
+      const recOpts=mime?{mimeType:mime,videoBitsPerSecond:2500000,audioBitsPerSecond:128000}:{};
+      videoRecorder=new MediaRecorder(cs,recOpts);
+      videoRecorder.ondataavailable=e=>{if(e.data.size)videoChunks.push(e.data);};
+      videoRecorder.onstop=savedOnStop;
+      videoRecorder.start(100);
+    } else {
+      videoStream.getTracks().forEach(t=>t.stop());
+      videoStream=await navigator.mediaDevices.getUserMedia({
+        video:{facingMode:videoFacingMode,width:{ideal:1280},height:{ideal:720},frameRate:{ideal:30}},
+        audio:{echoCancellation:true,noiseSuppression:true}
+      });
+      pv.srcObject=videoStream; pv.play().catch(()=>{});
+    }
+    pv.style.transform=videoFacingMode==='user'?'scaleX(-1)':'scaleX(1)';
+  }catch(e){toast('Could not flip camera.');}
+}
+function stopRecording(){
+  if(videoRecorder&&videoRecorder.state!=='inactive') videoRecorder.stop();
+  if(videoStream) videoStream.getTracks().forEach(t=>t.stop());
+  if(audioTrackRef){audioTrackRef.stop();audioTrackRef=null;}
+  clearInterval(recTimer);
+}
+function discardVideo(){
+  videoBlob=null;
+  document.getElementById('videoPlayback').src='';
+  document.getElementById('vidPlaybackWrap').style.display='none';
+  document.getElementById('vidOpenWrap').style.display='block';
+  document.getElementById('vidSubmitBtn').disabled=true;
+}
+async function submitVideo(){
+  if(!videoBlob) return toast('Please record a video first.');
+  const name=document.getElementById('vidName').value.trim()||sessionName||'Guest';
+  toast('Uploading video... please wait.');
+  try{
+    const {url,publicId}=await uploadToCloudinary(videoBlob,'video','Videos');
+    await saveWishToServer({type:'video',name,ownerId:sessionId,ownerName:sessionName,url,publicId,time:timeStr()});
+    videoBlob=null;
+    document.getElementById('vidSubmitBtn').disabled=true;
+    document.getElementById('videoPlayback').src='';
+    document.getElementById('vidPlaybackWrap').style.display='none';
+    document.getElementById('vidOpenWrap').style.display='block';
+    toast('Video wish saved, '+name+'!');
+    await loadWishes();
+  }catch(e){toast('Upload failed. Check your internet connection.');}
+}
+
+// ── VOICE ──
+async function startVoice(){
+  if(!sessionName){initSession();return;}
+  try{
+    voiceStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    voiceRecorder=new MediaRecorder(voiceStream,{mimeType:getMime('audio')});
+    voiceChunks=[];
+    voiceRecorder.ondataavailable=e=>{if(e.data.size)voiceChunks.push(e.data);};
+    voiceRecorder.onstop=()=>{
+      voiceBlob=new Blob(voiceChunks,{type:getMime('audio')});
+      document.getElementById('voiceAudio').src=URL.createObjectURL(voiceBlob);
+      document.getElementById('voicePlayback').style.display='block';
+      document.getElementById('voiceSubmitBtn').disabled=false;
+      renderViz(false); toast('Voice recorded! Listen back or submit.');
+    };
+    voiceRecorder.start(100);
+    recSeconds=0; startTimer('voiceTimer');
+    document.getElementById('voiceTimer').style.display='block';
+    document.getElementById('voiceStartBtn').style.display='none';
+    document.getElementById('voiceStopBtn').style.display='block';
+    renderViz(true);
+  }catch(e){toast('Microphone not available.');}
+}
+function stopVoice(){
+  if(voiceRecorder&&voiceRecorder.state!=='inactive') voiceRecorder.stop();
+  if(voiceStream) voiceStream.getTracks().forEach(t=>t.stop());
+  clearInterval(recTimer);
+  document.getElementById('voiceStartBtn').style.display='block';
+  document.getElementById('voiceStopBtn').style.display='none';
+}
+async function submitVoice(){
+  if(!voiceBlob) return toast('Please record a voice note first.');
+  const name=document.getElementById('voiceName').value.trim()||sessionName||'Guest';
+  toast('Uploading voice note... please wait.');
+  try{
+    const {url,publicId}=await uploadToCloudinary(voiceBlob,'video','Voice');
+    await saveWishToServer({type:'voice',name,ownerId:sessionId,ownerName:sessionName,url,publicId,time:timeStr()});
+    voiceBlob=null;
+    document.getElementById('voiceSubmitBtn').disabled=true;
+    document.getElementById('voicePlayback').style.display='none';
+    document.getElementById('voiceTimer').style.display='none';
+    renderViz(false);
+    toast('Voice wish saved, '+name+'!');
+    await loadWishes();
+  }catch(e){toast('Upload failed. Check your internet connection.');}
+}
+function renderViz(on){
+  const v=document.getElementById('voiceVisualizer');
+  while(v.firstChild) v.removeChild(v.firstChild);
+  if(!on){
+    const msg=document.createElement('div');
+    msg.style.cssText='text-align:center;color:var(--muted);font-size:.9rem;';
+    msg.textContent='Press record to begin';
+    v.appendChild(msg); return;
+  }
+  for(let i=0;i<28;i++){
+    const bar=document.createElement('div');
+    bar.className='bar-vis';
+    bar.style.animationDelay=(i*.06)+'s';
+    bar.style.height=(8+Math.random()*20)+'px';
+    v.appendChild(bar);
+  }
+}
+
+// ── PHOTOS API ──
+async function loadGallery(){
+  try{ const res=await fetch('/api/media',{headers:apiHeaders()}); photos=await res.json(); }
+  catch(e){ photos=[]; }
+  renderGallery(); updateStats();
+}
+async function savePhotoToServer(url,publicId,filename){
+  const res=await fetch('/api/media',{
+    method:'POST', headers:apiHeaders(),
+    body:JSON.stringify({url,publicId,type:'image',name:filename,ownerId:sessionId,ownerName:sessionName,filename,time:timeStr()})
+  });
+  return res.json();
+}
+
+// ── PHOTOS UPLOAD ──
+function triggerUpload(){ if(!sessionName){initSession();return;} document.getElementById('fileInput').click(); }
+function handleFiles(files){
+  if(!sessionName){initSession();return;}
+  const imgs=Array.from(files).filter(f=>f.type.startsWith('image/'));
+  if(!imgs.length) return toast('Please select image files only.');
+  uploadFiles(imgs);
+}
+async function uploadFiles(files){
+  const wrap=document.getElementById('progressWrap'),bar=document.getElementById('progressBar'),lbl=document.getElementById('progressLabel');
+  wrap.style.display='block'; lbl.style.display='block';
+  for(let i=0;i<files.length;i++){
+    lbl.textContent='Uploading '+(i+1)+' of '+files.length+'...';
+    try{
+      const {url,publicId}=await uploadPhotoToCloudinary(files[i],pct=>{bar.style.width=((i+pct/100)/files.length*100)+'%';});
+      await savePhotoToServer(url,publicId,files[i].name);
+    }catch(e){toast('Upload failed. Check your internet connection.');break;}
+  }
+  wrap.style.display='none'; lbl.style.display='none'; bar.style.width='0%';
+  await loadGallery();
+  toast(files.length+' photo'+(files.length>1?'s':'')+' shared! Thank you, '+sessionName+'!');
+}
+
+// ── PHOTO CAMERA ──
+async function openPhotoCamera(){ if(!sessionName){initSession();return;} await startPhotoCameraStream(); document.getElementById('cameraModal').classList.add('open'); }
+async function startPhotoCameraStream(){
+  if(photoCameraStream){photoCameraStream.getTracks().forEach(t=>t.stop());photoCameraStream=null;}
+  try{
+    photoCameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:photoFacingMode,width:{ideal:1920},height:{ideal:1080}},audio:false});
+    const v=document.getElementById('cameraVideo');
+    v.srcObject=photoCameraStream;
+    v.style.transform=photoFacingMode==='user'?'scaleX(-1)':'scaleX(1)';
+  }catch(e){toast('Camera not available on this device.');}
+}
+async function flipPhotoCamera(){ photoFacingMode=photoFacingMode==='environment'?'user':'environment'; await startPhotoCameraStream(); }
+function closePhotoCamera(){ if(photoCameraStream){photoCameraStream.getTracks().forEach(t=>t.stop());photoCameraStream=null;} document.getElementById('cameraModal').classList.remove('open'); }
+function snapPhoto(){
+  const v=document.getElementById('cameraVideo'),c=document.getElementById('snapCanvas');
+  c.width=v.videoWidth; c.height=v.videoHeight;
+  const ctx=c.getContext('2d');
+  if(photoFacingMode==='user'){ctx.translate(c.width,0);ctx.scale(-1,1);}
+  ctx.drawImage(v,0,0);
+  c.toBlob(blob=>{closePhotoCamera();uploadFiles([new File([blob],'snap_'+Date.now()+'.jpg',{type:'image/jpeg'})]);}, 'image/jpeg',.95);
+}
+
+// ── GALLERY RENDER ──
+function renderGallery(){
+  const grid=document.getElementById('galleryGrid');
+  const filtered=activeFilter==='all'?photos:photos.filter(p=>p.ownerName===activeFilter);
+  while(grid.firstChild) grid.removeChild(grid.firstChild);
+  if(!filtered.length){
+    const empty=document.createElement('div'); empty.className='empty-state';
+    const icon=document.createElement('span'); icon.className='empty-icon'; icon.textContent='🌸';
+    const msg=document.createElement('p'); msg.textContent='No photos yet — be the first to share a memory!';
+    empty.appendChild(icon); empty.appendChild(msg); grid.appendChild(empty); return;
+  }
+  filtered.forEach((photo,i)=>{
+    const isOwner=photo.ownerId===sessionId;
+    const card=document.createElement('div'); card.className='photo-card'; card.style.animationDelay=(i*.04)+'s';
+    const img=document.createElement('img'); img.src=photo.url; img.alt='photo'; img.loading='lazy';
+    img.addEventListener('click',()=>openLightbox(i)); card.appendChild(img);
+    if(isOwner){const b=document.createElement('div');b.className='owner-badge';b.textContent='Mine';card.appendChild(b);}
+    const ov=document.createElement('div'); ov.className='photo-overlay';
+    const nm=document.createElement('div'); nm.className='photo-name'; nm.textContent=photo.ownerName||''; ov.appendChild(nm);
+    const tm=document.createElement('div'); tm.className='photo-time'; tm.textContent=photo.time; ov.appendChild(tm);
+    const ac=document.createElement('div'); ac.className='photo-actions';
+    const vb=document.createElement('button'); vb.className='p-btn'; vb.textContent='View'; vb.onclick=e=>openLightbox(i,e); ac.appendChild(vb);
+    if(isOwner){const db=document.createElement('button');db.className='p-btn del';db.textContent='Delete';db.onclick=e=>deletePhoto(photo.id,e);ac.appendChild(db);}
+    ov.appendChild(ac); card.appendChild(ov); grid.appendChild(card);
+  });
+}
+function updateStats(){
+  document.getElementById('photoCount').textContent=photos.length;
+  const guests=[...new Set(photos.map(p=>p.ownerName).filter(Boolean))];
+  document.getElementById('guestCount').textContent=guests.length;
+  const tabs=document.getElementById('filterTabs');
+  while(tabs.firstChild) tabs.removeChild(tabs.firstChild);
+  const allBtn=document.createElement('button');
+  allBtn.className='filter-tab'+(activeFilter==='all'?' active':'');
+  allBtn.textContent='All'; allBtn.onclick=function(){filterGallery('all',this);};
+  tabs.appendChild(allBtn);
+  guests.forEach(g=>{
+    const b=document.createElement('button');
+    b.className='filter-tab'+(activeFilter===g?' active':'');
+    b.textContent=g; b.onclick=function(){filterGallery(g,this);};
+    tabs.appendChild(b);
+  });
+}
+function filterGallery(name,btn){
+  activeFilter=name;
+  document.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderGallery();
+}
+
+// ── LIGHTBOX ──
+function openLightbox(index,e){ if(e)e.stopPropagation(); currentLbIndex=index; showLbPhoto(); document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
+function showLbPhoto(){
+  const list=activeFilter==='all'?photos:photos.filter(p=>p.ownerName===activeFilter);
+  const p=list[currentLbIndex]; if(!p) return;
+  document.getElementById('lbImg').src=p.url;
+  document.getElementById('lbInfo').textContent=(p.ownerName||'')+' · '+p.time;
+}
+function navLightbox(dir,e){
+  if(e)e.stopPropagation();
+  const list=activeFilter==='all'?photos:photos.filter(p=>p.ownerName===activeFilter);
+  currentLbIndex=(currentLbIndex+dir+list.length)%list.length; showLbPhoto();
+}
+function closeLightbox(e){ if(e&&e.target!==e.currentTarget)return; document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
+
+// ── DELETE PHOTO ──
+async function deletePhoto(id,e){
+  if(e)e.stopPropagation();
+  const p=photos.find(x=>x.id===id); if(!p) return;
+  if(p.ownerId!==sessionId) return toast('You can only delete your own photos.');
+  if(!confirm('Remove this photo from the gallery?')) return;
+  try{ await fetch('/api/media/'+id,{method:'DELETE',headers:apiHeaders(),body:JSON.stringify({ownerId:sessionId})}); }catch(_){}
+  await loadGallery(); toast('Photo removed.');
+}
+
+// ── RENDER WALL ──
+function renderWall(){
+  const grid=document.getElementById('wishesGrid');
+  document.getElementById('wishCount').textContent=wishes.length+' wish'+(wishes.length!==1?'es':'');
+  while(grid.firstChild) grid.removeChild(grid.firstChild);
+  if(!wishes.length){
+    const empty=document.createElement('div'); empty.className='empty-wall';
+    const icon=document.createElement('span'); icon.className='big-icon'; icon.textContent='💌';
+    const msg=document.createElement('p'); msg.textContent='No wishes yet — be the first to leave one!';
+    empty.appendChild(icon); empty.appendChild(msg); grid.appendChild(empty); return;
+  }
+  const labels={text:'Message',video:'Video',voice:'Voice',draw:'Drawing'};
+  wishes.forEach((w,i)=>{
+    const isOwner=w.ownerId===sessionId;
+    const card=document.createElement('div'); card.className='wish-card'; card.style.animationDelay=(i*.05)+'s';
+    const tb=document.createElement('div'); tb.className='wish-type-bar wish-type-'+w.type; tb.textContent=labels[w.type]||w.type; card.appendChild(tb);
+    if(isOwner){const b=document.createElement('div');b.className='wish-mine-badge';b.textContent='Mine';card.appendChild(b);}
+    const body=document.createElement('div'); body.className='wish-body';
+    if(w.type==='text'){
+      const txt=document.createElement('div'); txt.className='wish-text'; txt.textContent='"'+(w.msg||'')+'"'; body.appendChild(txt);
+    }else if(w.type==='video'){
+      const vid=document.createElement('video'); vid.className='wish-video'; vid.controls=true; vid.setAttribute('playsinline',''); vid.preload='metadata'; if(w.url)vid.src=w.url; body.appendChild(vid);
+    }else if(w.type==='voice'){
+      const aud=document.createElement('audio'); aud.controls=true; aud.preload='metadata'; aud.style.cssText='width:100%;margin-bottom:10px;'; if(w.url)aud.src=w.url; body.appendChild(aud);
+    }else if(w.type==='draw'){
+      const img=document.createElement('img'); img.className='wish-img'; img.alt='Drawing'; if(w.url)img.src=w.url; body.appendChild(img);
+    }
+    card.appendChild(body);
+    const footer=document.createElement('div'); footer.className='wish-footer';
+    const info=document.createElement('div');
+    const author=document.createElement('div'); author.className='wish-author'; author.textContent='♡ '+(w.name||''); info.appendChild(author);
+    const tm=document.createElement('div'); tm.className='wish-time'; tm.textContent=w.time; info.appendChild(tm);
+    footer.appendChild(info);
+    if(isOwner){const db=document.createElement('button');db.className='wish-delete';db.title='Delete';db.textContent='🗑';db.onclick=()=>deleteWish(w.id);footer.appendChild(db);}
+    card.appendChild(footer); grid.appendChild(card);
+  });
+}
+
+// ── DELETE WISH ──
+async function deleteWish(id){
+  const w=wishes.find(x=>x.id===id); if(!w) return;
+  if(w.ownerId!==sessionId) return toast('You can only delete your own wishes.');
+  if(!confirm('Remove your wish?')) return;
+  try{await fetch('/api/wishes/'+id,{method:'DELETE',headers:apiHeaders(),body:JSON.stringify({ownerId:sessionId})});}catch(e){}
+  await loadWishes(); toast('Wish removed.');
+}
+
+// ── SLIDESHOW ──
+function startSlideshow(){ if(!wishes.length)return toast('No wishes yet!'); ssIndex=0; showSlide(); document.getElementById('slideshowOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeSlideshow(){ document.getElementById('slideshowOverlay').classList.remove('open'); document.body.style.overflow=''; }
+function ssNav(dir){ ssIndex=(ssIndex+dir+wishes.length)%wishes.length; showSlide(); }
+function showSlide(){
+  const w=wishes[ssIndex];
+  const content=document.getElementById('ssContent');
+  while(content.firstChild) content.removeChild(content.firstChild);
+  if(w.type==='text'){const txt=document.createElement('div');txt.className='ss-wish-text';txt.textContent='"'+(w.msg||'')+'"';content.appendChild(txt);}
+  else if(w.type==='video'){const vid=document.createElement('video');vid.controls=true;vid.setAttribute('playsinline','');vid.preload='metadata';vid.style.cssText='max-width:100%;border-radius:12px;margin-bottom:16px;';if(w.url)vid.src=w.url;content.appendChild(vid);}
+  else if(w.type==='voice'){
+    const ic=document.createElement('div');ic.style.cssText='font-size:3rem;margin-bottom:16px;';ic.textContent='🎙️';
+    const aud=document.createElement('audio');aud.controls=true;aud.preload='metadata';aud.style.cssText='width:100%;margin-bottom:16px;';if(w.url)aud.src=w.url;
+    content.appendChild(ic);content.appendChild(aud);
+  }else if(w.type==='draw'){const img=document.createElement('img');img.style.cssText='max-width:100%;border-radius:12px;margin-bottom:16px;';if(w.url)img.src=w.url;content.appendChild(img);}
+  const auth=document.createElement('div');auth.className='ss-author';auth.textContent='— '+(w.name||'');content.appendChild(auth);
+  document.getElementById('ssCounter').textContent=(ssIndex+1)+' / '+wishes.length;
+  const dots=document.getElementById('ssDots');
+  while(dots.firstChild) dots.removeChild(dots.firstChild);
+  wishes.forEach((_,i)=>{const d=document.createElement('div');d.className='ss-dot'+(i===ssIndex?' active':'');d.onclick=()=>{ssIndex=i;showSlide();};dots.appendChild(d);});
+}
+
+// ── MISC ──
+function getMime(kind){
+  const v=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'];
+  const a=['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+  return (kind==='video'?v:a).find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t))||'';
+}
+function startTimer(id){
+  clearInterval(recTimer);
+  const el=document.getElementById(id); el.style.display='block';
+  recTimer=setInterval(()=>{
+    recSeconds++;
+    const m=Math.floor(recSeconds/60),s=recSeconds%60;
+    el.textContent=m+':'+(s<10?'0':'')+s;
+    if(recSeconds>=60){stopRecording();stopVoice();}
+  },1000);
+}
+
+// ── DOM READY ──
+document.addEventListener('DOMContentLoaded',()=>{
+  const zone=document.getElementById('uploadZone');
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
+  zone.addEventListener('drop',e=>{
+    e.preventDefault(); zone.classList.remove('dragover');
+    if(!sessionName){initSession();return;}
+    handleFiles(e.dataTransfer.files);
+  });
+});
+
+// ── KEYBOARD ──
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightbox').classList.contains('open')){
+    if(e.key==='ArrowLeft') navLightbox(-1);
+    if(e.key==='ArrowRight') navLightbox(1);
+    if(e.key==='Escape') closeLightbox();
+    return;
+  }
+  if(document.getElementById('slideshowOverlay').classList.contains('open')){
+    if(e.key==='ArrowLeft') ssNav(-1);
+    if(e.key==='ArrowRight') ssNav(1);
+    if(e.key==='Escape') closeSlideshow();
+  }
+});
+
+initSession();
+</script>
+</body>
+</html>

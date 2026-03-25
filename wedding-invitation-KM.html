@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Κωνσταντίνος & Μαρία — Γαμήλια Πρόσκληση</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --lilac:      #c4a0d8;
+    --lilac-deep: #9b72bb;
+    --lilac-dark: #7c4fa0;
+    --lilac-pale: #f5eeff;
+    --lilac-mid:  #e0c8f0;
+    --text:       #3d2560;
+    --muted:      #9b82b8;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'Cormorant Garamond', Georgia, serif;
+    background: linear-gradient(160deg, #faf4ff 0%, #f0e6fa 35%, #e4d0f5 65%, #d8c0ef 100%);
+    min-height:100vh;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── FLOATING PARTICLES ── */
+  .particle { position:fixed; pointer-events:none; z-index:0; animation:rise linear infinite; opacity:0; }
+  @keyframes rise {
+    0%   { transform:translateY(110vh) rotate(0deg);   opacity:0; }
+    8%   { opacity:.55; }
+    92%  { opacity:.4; }
+    100% { transform:translateY(-10vh) rotate(400deg); opacity:0; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp    { from{opacity:0;transform:translateY(40px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes crownBob  { 0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-7px) rotate(4deg);} }
+  @keyframes shimmer   { 0%,100%{opacity:.5;transform:scale(1);} 50%{opacity:1;transform:scale(1.18);} }
+  @keyframes glowPulse { 0%,100%{box-shadow:0 10px 60px rgba(155,90,210,.18);} 50%{box-shadow:0 14px 80px rgba(155,90,210,.3),0 0 60px rgba(190,140,230,.14);} }
+  @keyframes heartbeat { 0%,100%{transform:scale(1);} 14%{transform:scale(1.3);} 28%{transform:scale(1);} }
+  @keyframes borderGlow { 0%,100%{border-color:rgba(180,130,220,.38);} 50%{border-color:rgba(200,160,240,.65);} }
+
+  /* ── PAGE WRAPPER ── */
+  .page {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 40px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── MAIN INVITATION CARD ── */
+  .invite-card {
+    width: 100%;
+    background: rgba(255,255,255,.78);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border-radius: 36px;
+    border: 1.5px solid rgba(180,130,220,.38);
+    animation: fadeUp 1.2s ease forwards, glowPulse 4.5s ease-in-out infinite, borderGlow 4.5s ease-in-out infinite;
+    padding: 56px 44px 48px;
+    text-align: center;
+    position: relative;
+  }
+
+  /* Corner SVG flowers */
+  .corner-svg { position:absolute; width:110px; height:110px; opacity:.32; pointer-events:none; }
+  .corner-svg.tl { top:-6px; left:-6px; }
+  .corner-svg.tr { top:-6px; right:-6px; transform:scaleX(-1); }
+  .corner-svg.bl { bottom:-6px; left:-6px; transform:scaleY(-1); }
+  .corner-svg.br { bottom:-6px; right:-6px; transform:scale(-1,-1); }
+
+  /* Monogram */
+  .monogram {
+    font-family:'Cinzel',serif;
+    font-size:3.2rem; font-weight:500;
+    color:var(--lilac-dark); letter-spacing:-2px; line-height:1;
+    margin-bottom: 6px;
+  }
+  .monogram .heart { font-size:1.4rem; color:var(--lilac); vertical-align:middle; animation:heartbeat 2.2s ease-in-out infinite; display:inline-block; margin:0 3px; }
+  .monogram .m { color:transparent; -webkit-text-stroke:2px var(--lilac-deep); }
+
+  /* Couple SVG */
+  .couple-wrap { margin:10px auto 24px; width:230px; height:230px; }
+  .couple-img { width:100%; height:100%; object-fit:contain; display:block; mix-blend-mode:multiply; filter:brightness(1.02) saturate(1.1); }
+
+  /* Subtitle */
+  .subtitle-top { font-family:'Lato',sans-serif; color:var(--lilac-deep); letter-spacing:5px; font-size:.68rem; text-transform:uppercase; font-weight:300; margin-bottom:18px; }
+
+  /* Names */
+  .names { font-family:'Cinzel',serif; font-size:clamp(1.25rem,3.5vw,1.65rem); font-weight:500; letter-spacing:5px; color:#5c3580; }
+  .amp   { color:var(--lilac); font-size:1.1rem; margin:0 10px; }
+
+  /* Divider */
+  .divider { display:flex; align-items:center; gap:12px; margin:24px 0; }
+  .div-line { flex:1; height:1px; background:linear-gradient(to right,transparent,var(--lilac),transparent); }
+  .div-star { color:var(--lilac); font-size:1.1rem; animation:shimmer 2.8s ease-in-out infinite; }
+
+  /* Date block */
+  .date-block  { text-align:center; margin-bottom:24px; }
+  .date-month  { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--lilac-dark); letter-spacing:3px; margin-bottom:2px; }
+  .date-row    { display:flex; align-items:center; justify-content:center; gap:22px; margin:4px 0; }
+  .date-day    { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; color:var(--lilac-dark); letter-spacing:1px; }
+  .date-num    { font-family:'Cinzel',serif; font-size:2.8rem; font-weight:700; color:var(--lilac-dark); line-height:1; }
+  .date-time-val { font-family:'Cormorant Garamond',serif; font-size:1.65rem; font-weight:500; color:var(--lilac-dark); border-bottom:1.5px solid var(--lilac); padding-bottom:3px; letter-spacing:2px; }
+  .date-year   { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--lilac-dark); letter-spacing:3px; margin-top:2px; }
+
+  /* Γονείς / Κουμπάρες */
+  .people-section { margin:6px 0 20px; }
+  .people-title { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:500; letter-spacing:3px; color:var(--lilac-dark); margin-bottom:14px; text-align:center; font-style:italic; }
+  .people-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; text-align:center; }
+  .people-name { font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--text); line-height:1.45; font-style:italic; }
+  .people-sep { height:1px; background:linear-gradient(to right,transparent,rgba(180,130,220,.3),transparent); margin:18px 0 20px; }
+
+  /* Info box */
+  .info-box { background:linear-gradient(135deg,rgba(180,130,220,.09),rgba(200,160,235,.15)); border-radius:18px; padding:26px 28px; margin-bottom:28px; border:1px solid rgba(180,130,220,.22); }
+  .info-row  { display:flex; align-items:flex-start; gap:14px; text-align:left; margin-bottom:16px; }
+  .info-row:last-child { margin-bottom:0; }
+  .info-icon  { font-size:1.45rem; flex-shrink:0; margin-top:2px; }
+  .info-label { font-family:'Cormorant Garamond',serif; font-size:.95rem; letter-spacing:2px; color:var(--lilac-deep); font-weight:400; font-style:italic; margin-bottom:4px; }
+  .info-text  { font-family:'Cormorant Garamond','EB Garamond',serif; font-size:1.05rem; color:#6b4a8a; line-height:1.5; }
+  .info-sub   { font-family:'Lato',sans-serif; font-size:.78rem; color:var(--muted); font-weight:300; }
+  .info-sep   { height:1px; background:rgba(180,130,220,.2); margin:14px 0; }
+
+  /* Dress code */
+  .dresscode {
+    display:inline-flex; align-items:center; gap:10px;
+    background:linear-gradient(135deg,rgba(180,130,220,.16),rgba(200,160,235,.22));
+    border:1px solid rgba(180,130,220,.32); border-radius:50px;
+    padding:10px 22px; margin-bottom:8px;
+    font-family:'Lato',sans-serif; font-size:.74rem;
+    letter-spacing:3px; text-transform:uppercase; color:var(--lilac-dark); font-weight:400;
+  }
+  .dc-swatch { width:18px; height:18px; border-radius:50%; background:linear-gradient(135deg,#c9aaeb,#9b72bb); box-shadow:0 2px 8px rgba(155,90,210,.35); flex-shrink:0; }
+  .dresscode-note { font-family:'Lato',sans-serif; font-size:.7rem; color:var(--lilac); letter-spacing:1.5px; margin-bottom:28px; font-weight:300; }
+
+  /* RSVP */
+  .rsvp-label { font-family:'Lato',sans-serif; color:var(--muted); font-size:.74rem; letter-spacing:3px; text-transform:uppercase; font-weight:300; margin-bottom:14px; }
+  .rsvp-btn {
+    background:linear-gradient(135deg,var(--lilac),var(--lilac-deep),var(--lilac-dark));
+    color:#fff; border:none; border-radius:50px; padding:15px 44px;
+    font-family:'Lato',sans-serif; font-size:.8rem; letter-spacing:4px; text-transform:uppercase;
+    cursor:pointer; font-weight:400; box-shadow:0 6px 26px rgba(155,90,210,.4);
+    transition:all .3s; text-decoration:none; display:inline-block; margin-bottom:36px;
+  }
+  .rsvp-btn:hover { transform:translateY(-3px); box-shadow:0 10px 36px rgba(155,90,210,.55); }
+
+  /* Footer invite */
+  .footer-inv { font-family:'Lato',sans-serif; color:var(--lilac); font-size:.72rem; letter-spacing:2.5px; font-weight:300; }
+
+  /* ── CONNECTOR ── */
+  .connector {
+    display:flex; flex-direction:column; align-items:center;
+    padding:9px 0; gap:6px;
+  }
+  .connector-line { width:1.5px; height:19px; background:linear-gradient(to bottom,rgba(180,130,220,.4),rgba(180,130,220,.1)); }
+  .connector-dot  { width:8px; height:8px; border-radius:50%; background:var(--lilac); opacity:.7; }
+
+  /* ── QUIZ SECTION ── */
+  .quiz-section {
+    width:100%;
+    margin-bottom:0;
+  }
+  .quiz-card {
+    width:100%;
+    background:rgba(255,255,255,.82);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-radius:32px;
+    border:1.5px solid rgba(180,130,220,.35);
+    padding:44px 36px 40px;
+    text-align:center;
+    animation:fadeUp .9s ease forwards, glowPulse 5s ease-in-out infinite;
+  }
+  .quiz-label {
+    font-family:'Lato',sans-serif;
+    font-size:.65rem;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:300;
+    margin-bottom:12px;
+  }
+  .quiz-title {
+    font-family:'Cinzel',serif;
+    font-size:1.3rem;
+    color:var(--lilac-dark);
+    letter-spacing:2px;
+    margin-bottom:10px;
+  }
+  .quiz-desc {
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:28px;
+  }
+  .quiz-start-btn {
+    background:linear-gradient(135deg,var(--lilac),var(--lilac-deep),var(--lilac-dark));
+    color:#fff;border:none;border-radius:50px;padding:14px 40px;
+    font-family:'Lato',sans-serif;font-size:.78rem;letter-spacing:3px;text-transform:uppercase;
+    cursor:pointer;box-shadow:0 6px 26px rgba(155,90,210,.38);
+    transition:all .3s;
+  }
+  .quiz-start-btn:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(155,90,210,.55);}
+  /* Progress */
+  .quiz-progress-wrap {
+    display:flex;align-items:center;gap:12px;margin-bottom:28px;
+  }
+  .quiz-progress-bar {
+    flex:1;height:5px;background:rgba(180,130,220,.18);border-radius:10px;overflow:hidden;
+  }
+  .quiz-progress-fill {
+    height:100%;background:linear-gradient(90deg,var(--lilac),var(--lilac-dark));
+    border-radius:10px;transition:width .4s ease;
+  }
+  .quiz-progress-num {
+    font-family:'Lato',sans-serif;font-size:.68rem;color:var(--muted);letter-spacing:1px;white-space:nowrap;
+  }
+  /* Question */
+  .quiz-q {
+    font-family:'Cinzel',serif;
+    font-size:1rem;
+    color:var(--text);
+    letter-spacing:.5px;
+    line-height:1.55;
+    margin-bottom:26px;
+    min-height:52px;
+  }
+  .quiz-options {
+    display:flex;flex-direction:column;gap:11px;
+  }
+  .quiz-opt {
+    background:rgba(245,238,255,.7);
+    border:1.5px solid rgba(180,130,220,.3);
+    border-radius:16px;
+    padding:14px 20px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.05rem;
+    color:var(--text);
+    cursor:pointer;
+    text-align:left;
+    transition:all .2s;
+    line-height:1.4;
+  }
+  .quiz-opt:hover:not(:disabled){background:rgba(196,160,216,.18);border-color:var(--lilac);}
+  .quiz-opt.correct{background:rgba(80,200,120,.15)!important;border-color:#50c878!important;color:#1a7a40!important;font-weight:500;}
+  .quiz-opt.wrong{background:rgba(220,60,80,.1)!important;border-color:#dc3c50!important;color:#b03050!important;}
+  .quiz-opt.reveal{background:rgba(80,200,120,.08)!important;border-color:rgba(80,200,120,.4)!important;}
+  .quiz-opt:disabled{cursor:default;}
+  /* Result */
+  .quiz-rank-icon{font-size:3.5rem;margin-bottom:14px;animation:heartbeat 1.4s ease infinite;}
+  .quiz-rank-title{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--lilac-dark);letter-spacing:2px;margin-bottom:8px;}
+  .quiz-score-line{font-family:'Lato',sans-serif;font-size:.78rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .quiz-rank-msg{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--muted);line-height:1.6;margin-bottom:28px;}
+  .quiz-retry-btn{background:transparent;border:1.5px solid var(--lilac);color:var(--lilac-dark);border-radius:50px;padding:11px 32px;font-family:'Lato',sans-serif;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+  .quiz-retry-btn:hover{background:rgba(196,160,216,.18);}
+
+  /* ── APPS SECTION ── */
+  .apps-section {
+    width:100%;
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  }
+
+  .app-card {
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border-radius:28px;
+    border:1.5px solid rgba(180,130,220,.35);
+    padding:32px 24px 28px;
+    text-align:center;
+    cursor:pointer;
+    transition:all .35s ease;
+    animation:fadeUp 1.4s ease forwards;
+    position:relative;
+    overflow:hidden;
+  }
+  .app-card::before {
+    content:'';
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 0%,rgba(196,160,216,.2),transparent 70%);
+    pointer-events:none;
+  }
+  .app-card:hover {
+    transform:translateY(-6px);
+    box-shadow:0 16px 50px rgba(155,90,210,.22);
+    border-color:rgba(155,90,210,.55);
+  }
+
+  .app-icon { font-size:2.2rem; margin-bottom:12px; display:block; }
+  .app-name {
+    font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:2.5px;
+    color:var(--lilac-dark); font-weight:500; margin-bottom:8px; text-transform:uppercase;
+  }
+  .app-desc {
+    font-family:'Lato',sans-serif; font-size:.72rem; color:var(--muted);
+    font-weight:300; line-height:1.6; letter-spacing:.3px; margin-bottom:18px;
+  }
+
+  /* QR code box */
+  .qr-box {
+    width:70px; height:70px;
+    margin:0 auto 14px;
+    border-radius:10px;
+    border:1.5px solid rgba(155,90,210,.3);
+    display:grid; grid-template-columns:repeat(7,1fr);
+    gap:2px; padding:6px; opacity:.7;
+  }
+  .qr-dot { background:var(--lilac-dark); border-radius:1px; }
+
+  .app-open-btn {
+    display:inline-block;
+    background:linear-gradient(135deg,var(--lilac),var(--lilac-deep));
+    color:#fff; border:none; border-radius:50px;
+    padding:10px 24px; font-size:.7rem; letter-spacing:3px; text-transform:uppercase;
+    cursor:pointer; font-family:'Lato',sans-serif; font-weight:400;
+    transition:all .3s; box-shadow:0 4px 16px rgba(155,114,187,.35);
+    text-decoration:none; width:100%;
+  }
+  .app-open-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(155,114,187,.5); }
+
+  /* ── BOTTOM FOOTER ── */
+  .page-footer {
+    margin-top:32px; text-align:center;
+    font-family:'Lato',sans-serif; color:rgba(180,130,220,.6);
+    font-size:.7rem; letter-spacing:2px; font-weight:300;
+  }
+
+
+  /* IBAN */
+  .iban-section{background:linear-gradient(135deg,rgba(180,130,220,.1),rgba(200,160,235,.16));border:1px solid rgba(180,130,220,.28);border-radius:20px;padding:24px 28px;margin-bottom:28px;text-align:left;}
+  .iban-title{font-family:'Lato',sans-serif;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--lilac-deep);font-weight:300;margin-bottom:14px;text-align:center;}
+  .iban-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+  .iban-row:last-child{margin-bottom:0;}
+  .iban-label{font-family:'Lato',sans-serif;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--lilac);font-weight:300;min-width:80px;margin-top:2px;}
+  .iban-value{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#6b4a8a;letter-spacing:1px;flex:1;}
+  .iban-copy{background:rgba(196,160,216,.2);border:1px solid rgba(180,130,220,.3);border-radius:50px;padding:3px 12px;font-size:.68rem;color:var(--lilac-dark);cursor:pointer;font-family:'Lato',sans-serif;transition:all .2s;white-space:nowrap;}
+  .iban-copy:hover{background:rgba(196,160,216,.4);}
+  .iban-note{font-family:'Lato',sans-serif;font-size:.7rem;color:var(--muted);font-weight:300;text-align:center;margin-top:12px;line-height:1.6;}
+
+  /* RSVP modal */
+  .rsvp-overlay{position:fixed;inset:0;z-index:500;background:rgba(20,8,40,.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;}
+  .rsvp-overlay.open{display:flex;}
+  .rsvp-modal{background:rgba(255,255,255,.97);border-radius:28px;padding:40px 36px;max-width:440px;width:100%;box-shadow:0 20px 80px rgba(100,60,150,.28);animation:fadeUp .3s ease;max-height:90vh;overflow-y:auto;}
+  .rsvp-modal h2{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--lilac-dark);letter-spacing:2px;margin-bottom:6px;text-align:center;}
+  .rsvp-modal .rsvp-sub{font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:28px;}
+  .form-row{margin-bottom:18px;}
+  .form-label{font-family:'Lato',sans-serif;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--lilac-deep);display:block;margin-bottom:8px;}
+  .form-input{width:100%;padding:12px 18px;border:1.5px solid var(--lilac-mid);border-radius:50px;font-family:'Lato',sans-serif;font-size:.92rem;color:var(--text);outline:none;background:var(--lilac-pale);transition:border-color .2s;}
+  .form-input:focus{border-color:var(--lilac-deep);}
+  .form-textarea{width:100%;padding:12px 18px;border:1.5px solid var(--lilac-mid);border-radius:16px;font-family:'Lato',sans-serif;font-size:.92rem;color:var(--text);outline:none;background:var(--lilac-pale);resize:vertical;min-height:80px;line-height:1.6;transition:border-color .2s;}
+  .form-textarea:focus{border-color:var(--lilac-deep);}
+  .attend-btns{display:flex;gap:10px;}
+  .attend-btn{flex:1;padding:11px;border-radius:50px;border:1.5px solid var(--lilac-mid);background:rgba(255,255,255,.7);font-family:'Lato',sans-serif;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:var(--muted);transition:all .25s;}
+  .attend-btn.selected-yes{background:rgba(80,200,120,.15);border-color:#50c878;color:#1a8a50;font-weight:500;}
+  .attend-btn.selected-no{background:rgba(220,60,80,.12);border-color:#dc3c50;color:#b03050;font-weight:500;}
+  .rsvp-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--lilac),var(--lilac-deep),var(--lilac-dark));color:#fff;border:none;border-radius:50px;font-family:'Lato',sans-serif;font-size:.8rem;letter-spacing:4px;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 26px rgba(155,90,210,.4);transition:all .3s;margin-top:8px;}
+  .rsvp-submit:hover{transform:translateY(-2px);}
+  .rsvp-submit:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+  .rsvp-close{position:absolute;top:16px;right:20px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;}
+  .rsvp-success{text-align:center;padding:20px 0;}
+  .rsvp-success .big-check{font-size:3rem;margin-bottom:12px;}
+  .rsvp-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--lilac-dark);color:#fff;padding:12px 28px;border-radius:50px;font-size:.82rem;box-shadow:0 8px 32px rgba(100,60,150,.4);transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:3000;}
+  .rsvp-toast.show{transform:translateX(-50%) translateY(0);}
+
+  /* ── COUNTDOWN ── */
+  .countdown-wrap {
+    display:flex; gap:10px; justify-content:center; margin:22px 0 28px;
+  }
+  .cd-block {
+    display:flex; flex-direction:column; align-items:center;
+    background:rgba(196,160,216,.14); border:1px solid rgba(180,130,220,.28);
+    border-radius:16px; padding:12px 14px; min-width:62px;
+  }
+  .cd-num {
+    font-family:'Cinzel',serif; font-size:1.6rem; color:var(--lilac-dark);
+    line-height:1; font-weight:700; letter-spacing:1px;
+  }
+  .cd-label {
+    font-family:'Lato',sans-serif; font-size:.58rem; letter-spacing:2.5px;
+    text-transform:uppercase; color:var(--muted); margin-top:4px; font-weight:300;
+  }
+  .cd-passed {
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1rem; color:var(--lilac); margin:18px 0 24px;
+  }
+
+  /* ── MAP BUTTON ── */
+  .map-btn {
+    display:inline-flex; align-items:center; gap:5px;
+    background:rgba(196,160,216,.18); border:1px solid rgba(180,130,220,.32);
+    border-radius:50px; padding:4px 12px; font-family:'Lato',sans-serif;
+    font-size:.65rem; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--lilac-dark); text-decoration:none; margin-top:7px;
+    transition:all .2s; cursor:pointer;
+  }
+  .map-btn:hover { background:rgba(196,160,216,.38); }
+
+  /* ── WEATHER CARD ── */
+  .weather-card {
+    background:linear-gradient(135deg,rgba(180,130,220,.1),rgba(200,160,235,.16));
+    border:1px solid rgba(180,130,220,.28); border-radius:20px;
+    padding:20px 24px; margin-bottom:28px; text-align:center;
+  }
+  .weather-title {
+    font-family:'Lato',sans-serif; font-size:.65rem; letter-spacing:3px;
+    text-transform:uppercase; color:var(--muted); font-weight:300; margin-bottom:12px;
+  }
+  .weather-body { display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; }
+  .weather-icon { font-size:2.4rem; line-height:1; }
+  .weather-temps { text-align:left; }
+  .weather-temp-main { font-family:'Cinzel',serif; font-size:1.5rem; color:var(--lilac-dark); }
+  .weather-temp-range { font-family:'Lato',sans-serif; font-size:.72rem; color:var(--muted); margin-top:2px; }
+  .weather-desc { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.95rem; color:var(--muted); }
+  .weather-note { font-family:'Lato',sans-serif; font-size:.62rem; color:var(--muted); margin-top:10px; letter-spacing:1px; opacity:.75; }
+
+  @media(max-width:500px) {
+    .invite-card { padding:40px 22px 36px; }
+    .apps-section { grid-template-columns:1fr; }
+    .names { font-size:1.1rem; letter-spacing:3px; }
+    .rsvp-modal { padding:32px 22px; }
+    .cd-block { min-width:52px; padding:10px 10px; }
+    .cd-num { font-size:1.35rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<script>
+const sym=['✨','⭐','🌸','💜','✦','🌟','🦋','🌷','💫','🪄','🌺','🫧'];
+for(let i=0;i<26;i++){
+  const el=document.createElement('div');
+  el.className='particle';
+  el.textContent=sym[i%sym.length];
+  const size=.7+Math.random()*1.3, left=Math.random()*100;
+  const dur=9+Math.random()*14, delay=-Math.random()*20;
+  el.style.cssText=`left:${left}%;font-size:${size}rem;animation-duration:${dur}s;animation-delay:${delay}s;`;
+  document.body.appendChild(el);
+}
+</script>
+
+<div class="page">
+
+  <!-- ══════════════════════════════
+       INVITATION CARD
+  ══════════════════════════════ -->
+  <div class="invite-card">
+
+    <!-- Corner florals -->
+    <svg class="corner-svg tl" viewBox="0 0 110 110" fill="none">
+      <path d="M10 100 Q20 58 62 28 Q82 14 102 8" stroke="#c4a0d8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M28 82 Q34 54 66 38" stroke="#c4a0d8" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="66" cy="24" rx="12" ry="18" transform="rotate(-30 66 24)" stroke="#b08ad4" stroke-width="1.5" fill="rgba(196,160,216,.14)"/>
+      <ellipse cx="86" cy="16" rx="9"  ry="14" transform="rotate(-50 86 16)" stroke="#b08ad4" stroke-width="1.2" fill="rgba(196,160,216,.1)"/>
+      <ellipse cx="50" cy="34" rx="8"  ry="12" transform="rotate(-10 50 34)" stroke="#c4a0d8" stroke-width="1"   fill="rgba(196,160,216,.1)"/>
+      <circle cx="66" cy="23" r="3" fill="#b08ad4" opacity=".5"/>
+      <path d="M20 90 Q25 82 32 86 Q36 72 46 76" stroke="#c4a0d8" stroke-width="1" fill="none"/>
+    </svg>
+    <svg class="corner-svg tr" viewBox="0 0 110 110" fill="none">
+      <path d="M10 100 Q20 58 62 28 Q82 14 102 8" stroke="#c4a0d8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="66" cy="24" rx="12" ry="18" transform="rotate(-30 66 24)" stroke="#b08ad4" stroke-width="1.5" fill="rgba(196,160,216,.14)"/>
+      <ellipse cx="86" cy="16" rx="9"  ry="14" transform="rotate(-50 86 16)" stroke="#b08ad4" stroke-width="1.2" fill="rgba(196,160,216,.1)"/>
+      <circle cx="66" cy="23" r="3" fill="#b08ad4" opacity=".5"/>
+    </svg>
+    <svg class="corner-svg bl" viewBox="0 0 110 110" fill="none">
+      <path d="M10 100 Q20 58 62 28 Q82 14 102 8" stroke="#c4a0d8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="66" cy="24" rx="12" ry="18" transform="rotate(-30 66 24)" stroke="#b08ad4" stroke-width="1.5" fill="rgba(196,160,216,.14)"/>
+      <circle cx="66" cy="23" r="3" fill="#b08ad4" opacity=".5"/>
+    </svg>
+    <svg class="corner-svg br" viewBox="0 0 110 110" fill="none">
+      <path d="M10 100 Q20 58 62 28 Q82 14 102 8" stroke="#c4a0d8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="66" cy="24" rx="12" ry="18" transform="rotate(-30 66 24)" stroke="#b08ad4" stroke-width="1.5" fill="rgba(196,160,216,.14)"/>
+      <circle cx="66" cy="23" r="3" fill="#b08ad4" opacity=".5"/>
+    </svg>
+
+    <!-- Monogram -->
+    <div class="monogram">
+      <span>K</span><span class="heart">♡</span><span class="m">M</span>
+    </div>
+
+    <!-- Couple illustration -->
+    <div class="couple-wrap">
+      <img class="couple-img" src="couple-silhouette.png" alt="Κωνσταντίνος &amp; Μαρία"/>
+    </div>
+
+    <p class="subtitle-top">Σας προσκαλούμε στον γάμο μας</p>
+
+    <!-- Names -->
+    <div class="names">ΚΩΝΣΤΑΝΤΙΝΟΣ <span class="amp">&amp;</span> ΜΑΡΙΑ</div>
+
+    <!-- Divider -->
+    <div class="divider"><div class="div-line"></div><span class="div-star">🌸</span><div class="div-line"></div></div>
+
+    <!-- Date -->
+    <div class="date-block">
+      <div class="date-month">Μάϊος</div>
+      <div class="date-row">
+        <span class="date-day">Κυριακή</span>
+        <span class="date-num">24</span>
+        <span class="date-time-val">18:00</span>
+      </div>
+      <div class="date-year">2026</div>
+    </div>
+
+    <!-- Γονείς -->
+    <div class="people-sep"></div>
+    <div class="people-section">
+      <div class="people-title">Γονείς</div>
+      <div class="people-grid">
+        <div class="people-name">Αθανάσιος Γιάτσιος<br/>Μαρία Καρακίζη</div>
+        <div class="people-name">Αναστάσιος Χρυσάφης<br/>Πολυξένη Κυριακίδου</div>
+      </div>
+    </div>
+
+    <!-- Κουμπάρες -->
+    <div class="people-sep"></div>
+    <div class="people-section">
+      <div class="people-title">Κουμπάρες</div>
+      <div class="people-grid">
+        <div class="people-name">Μαριαλένα<br/>Δημητριάδου</div>
+        <div class="people-name">Μανταλένα<br/>Αβογιάν</div>
+      </div>
+    </div>
+    <div class="people-sep"></div>
+
+    <!-- Countdown -->
+    <div class="countdown-wrap" id="countdownWrap">
+      <div class="cd-block"><div class="cd-num" id="cdDays">--</div><div class="cd-label">Ημέρες</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdHours">--</div><div class="cd-label">Ώρες</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdMins">--</div><div class="cd-label">Λεπτά</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdSecs">--</div><div class="cd-label">Δευτ/πτα</div></div>
+    </div>
+
+    <!-- Info -->
+    <div class="info-box">
+      <div class="info-row">
+        <span class="info-icon">⛪</span>
+        <div>
+          <div class="info-label">Εκκλησία</div>
+          <div class="info-text">Ιερός Ναός Αγίου Αντωνίου<br/>και Αγίας Μαρίνας</div>
+          <!-- Update the link below with the correct Google Maps URL for the church -->
+          <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Ιερός+Ναός+Αγίου+Αντωνίου+Αγίας+Μαρίνας" target="_blank" rel="noopener">📍 Χάρτης</a>
+        </div>
+      </div>
+      <div class="info-sep"></div>
+      <div class="info-row">
+        <span class="info-icon">🏨</span>
+        <div>
+          <div class="info-label">Δεξίωση</div>
+          <div class="info-text">Elpida Resort &amp; Spa</div>
+          <div class="info-sub">Γαμήλια δεξίωση &amp; εορτασμός</div>
+          <!-- Update the link below with the correct Google Maps URL for the venue -->
+          <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Elpida+Resort+Spa" target="_blank" rel="noopener">📍 Χάρτης</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dress code -->
+    <div class="dresscode">
+      <div class="dc-swatch"></div>
+      Dress Code: Φορέστε κάτι Λιλά
+    </div>
+    <div class="dresscode-note">Προαιρετική παράκληση νύφης ✦</div>
+
+    <!-- IBAN for gifts -->
+    <div class="iban-section">
+      <div class="iban-title">💜 &nbsp; Δώρα &amp; Κατάθεση &nbsp; 💜</div>
+      <div class="iban-row">
+        <span class="iban-label">Τράπεζα</span>
+        <span class="iban-value" id="ibanBank">PIRAEUS BANK SA</span>
+      </div>
+      <div class="iban-row">
+        <span class="iban-label">Δικαιούχος</span>
+        <span class="iban-value">Κωνσταντίνος Γιάτσιος</span>
+      </div>
+      <div class="iban-row" style="flex-direction:column;gap:6px;">
+        <span class="iban-label">IBAN</span>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span class="iban-value" id="ibanNumber" style="word-break:break-all;letter-spacing:2px;">GR71 0171 6660 0066 6614 9001 221</span>
+          <button class="iban-copy" onclick="copyIBAN()">📋 Αντιγραφή</button>
+        </div>
+      </div>
+      <div class="iban-note">Αν επιθυμείτε να μας χαρίσετε κάτι, η μεγαλύτερη χαρά μας είναι η παρουσία σας · Αν θέλετε να συνεισφέρετε στο ταξίδι μας, μπορείτε να κάνετε κατάθεση στον παραπάνω λογαριασμό ✦</div>
+    </div>
+
+    <!-- Weather -->
+    <div class="weather-card" id="weatherCard">
+      <div class="weather-title">Καιρός την ημέρα του γάμου</div>
+      <div class="weather-body" id="weatherBody">
+        <div class="weather-icon">🌤️</div>
+        <div class="weather-temps">
+          <div class="weather-temp-main" id="weatherTemp">~26°C</div>
+          <div class="weather-temp-range" id="weatherRange">min ~18°C</div>
+        </div>
+        <div class="weather-desc" id="weatherDesc">Τυπικά ηλιόλουστος καιρός για Μάιο</div>
+      </div>
+      <div class="weather-note" id="weatherNote">Ακριβής πρόγνωση διαθέσιμη ~10 ημέρες πριν τον γάμο</div>
+    </div>
+
+    <!-- RSVP -->
+    <p class="rsvp-label">RSVP μέχρι τις 10 Μαΐου 2026</p>
+    <button class="rsvp-btn" onclick="openRSVP()">✨ &nbsp; Απαντήστε εδώ</button>
+
+    <!-- Footer -->
+    <p class="footer-inv">✦ &nbsp; Και έζησαν αυτοί καλά κι εμείς καλύτερα &nbsp; ✦</p>
+  </div>
+
+  <!-- ══════════════════════════════
+       CONNECTOR
+  ══════════════════════════════ -->
+  <div class="connector">
+    <div class="connector-line"></div>
+    <div class="connector-dot"></div>
+    <div class="connector-line"></div>
+    <span style="font-family:'Lato',sans-serif;font-size:.65rem;letter-spacing:4px;color:var(--muted);text-transform:uppercase;font-weight:300;">Πόσο καλά τους ξέρεις;</span>
+    <div class="connector-line"></div>
+    <div class="connector-dot"></div>
+    <div class="connector-line"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       QUIZ SECTION
+  ══════════════════════════════ -->
+  <div class="quiz-section">
+    <div class="quiz-card">
+
+      <!-- START SCREEN -->
+      <div id="quizStartScreen">
+        <div class="quiz-label">Mini Quiz</div>
+        <div class="quiz-title">Πόσο καλά ξέρεις το ζευγάρι;</div>
+        <div class="quiz-desc">8 ερωτήσεις για τον Κωνσταντίνο &amp; τη Μαρία.<br>Μπορείς να τα πας καλύτερα από τις κουμπάρες;</div>
+        <button class="quiz-start-btn" onclick="quizStart()">Ξεκίνα το Quiz ✦</button>
+      </div>
+
+      <!-- QUESTION SCREEN -->
+      <div id="quizQuestion" style="display:none;">
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizFill" style="width:0%"></div></div>
+          <div class="quiz-progress-num" id="quizProgressNum">1 / 8</div>
+        </div>
+        <div class="quiz-q" id="quizQText"></div>
+        <div class="quiz-options" id="quizOpts"></div>
+      </div>
+
+      <!-- RESULT SCREEN -->
+      <div id="quizResult" style="display:none;">
+        <div class="quiz-rank-icon" id="quizRankIcon"></div>
+        <div class="quiz-rank-title" id="quizRankTitle"></div>
+        <div class="quiz-score-line" id="quizScoreLine"></div>
+        <div class="quiz-rank-msg" id="quizRankMsg"></div>
+        <button class="quiz-retry-btn" onclick="quizReset()">Παίξε ξανά</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       CONNECTOR 2
+  ══════════════════════════════ -->
+  <div class="connector">
+    <div class="connector-line"></div>
+    <div class="connector-dot"></div>
+    <div class="connector-line"></div>
+    <span style="font-family:'Lato',sans-serif;font-size:.65rem;letter-spacing:4px;color:var(--muted);text-transform:uppercase;font-weight:300;">Για τους καλεσμένους μας</span>
+    <div class="connector-line"></div>
+    <div class="connector-dot"></div>
+    <div class="connector-line"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       APPS SECTION
+  ══════════════════════════════ -->
+  <div class="apps-section">
+
+    <!-- WishWall (merged) -->
+    <div class="app-card" style="animation-delay:.1s;">
+      <span class="app-icon">💌</span>
+      <div class="qr-box" id="qr2"></div>
+      <div class="app-name">WishWall</div>
+      <div class="app-desc">Share photos, leave a video, voice note or message — we'll treasure it forever!</div>
+      <button class="app-open-btn" onclick="openApp('wall')">✦ &nbsp; Open</button>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    Made with 💜 for Κωνσταντίνος &amp; Μαρία · 24.05.2026
+  </div>
+</div>
+
+<!-- RSVP Modal -->
+<div class="rsvp-overlay" id="rsvpOverlay">
+  <div class="rsvp-modal" style="position:relative;">
+    <button class="rsvp-close" onclick="closeRSVP()">✕</button>
+    <div id="rsvpForm">
+      <h2>RSVP</h2>
+      <p class="rsvp-sub">Κωνσταντίνος &amp; Μαρία · 24 Μαΐου 2026</p>
+      <div class="form-row">
+        <label class="form-label">Ονοματεπώνυμο *</label>
+        <input class="form-input" id="rsvpName" type="text" placeholder="Το όνομά σας" maxlength="60"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Παρουσία *</label>
+        <div class="attend-btns">
+          <button class="attend-btn" id="btnYes" onclick="setAttend(true)">✓ &nbsp; Θα είμαι εκεί</button>
+          <button class="attend-btn" id="btnNo"  onclick="setAttend(false)">✗ &nbsp; Δεν μπορώ</button>
+        </div>
+      </div>
+      <div id="guestCountRow" class="form-row" style="display:none;">
+        <label class="form-label">Αριθμός ατόμων</label>
+        <input class="form-input" id="rsvpGuests" type="number" min="1" max="10" value="1" style="max-width:120px;"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Μήνυμα (προαιρετικό)</label>
+        <textarea class="form-textarea" id="rsvpMsg" placeholder="Γράψτε κάτι για το ζευγάρι…" maxlength="300"></textarea>
+      </div>
+      <button class="rsvp-submit" id="rsvpSubmitBtn" onclick="submitRSVP()">💌 &nbsp; Αποστολή RSVP</button>
+    </div>
+    <div class="rsvp-success" id="rsvpSuccess" style="display:none;">
+      <div class="big-check">💜</div>
+      <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--lilac-dark);letter-spacing:2px;margin-bottom:8px;">Ευχαριστούμε!</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--muted);font-style:italic;" id="rsvpSuccessMsg"></div>
+    </div>
+  </div>
+</div>
+<div class="rsvp-toast" id="rsvpToast"></div>
+
+<script>
+// ── QR patterns ──
+const patterns = {
+  qr1: [1,1,1,0,1,1,1, 1,0,1,0,1,0,1, 1,0,1,1,1,0,1, 0,1,0,0,0,1,0, 1,0,1,1,1,0,1, 1,0,1,0,1,0,1, 1,1,1,0,1,1,1],
+  qr2: [1,1,1,0,1,1,1, 1,0,0,1,0,0,1, 1,0,1,0,1,0,1, 0,0,1,1,1,0,0, 1,0,1,0,1,0,1, 1,0,0,1,0,0,1, 1,1,1,0,1,1,1]
+};
+['qr2'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  patterns[id].forEach(v => {
+    const d = document.createElement('div');
+    d.className = 'qr-dot';
+    d.style.opacity = v ? .9 : .08;
+    el.appendChild(d);
+  });
+});
+
+// ── Open apps in a new tab so camera & mic permissions work fully ──
+function openApp(id) {
+  const urls = { wall: 'wishwall.html' };
+  window.open(urls[id], '_blank');
+}
+
+// ── IBAN copy ──
+function copyIBAN() {
+  const iban = document.getElementById('ibanNumber').textContent.replace(/\s/g,'');
+  navigator.clipboard.writeText(iban).then(() => {
+    showRsvpToast('IBAN αντιγράφηκε! 📋');
+  }).catch(() => {
+    showRsvpToast('Αντιγράψτε: ' + document.getElementById('ibanNumber').textContent);
+  });
+}
+
+// ── RSVP modal ──
+let attendingChoice = null;
+
+function openRSVP() {
+  attendingChoice = null;
+  document.getElementById('rsvpForm').style.display = 'block';
+  document.getElementById('rsvpSuccess').style.display = 'none';
+  document.getElementById('btnYes').className = 'attend-btn';
+  document.getElementById('btnNo').className = 'attend-btn';
+  document.getElementById('guestCountRow').style.display = 'none';
+  document.getElementById('rsvpOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('rsvpName').focus(), 200);
+}
+function closeRSVP() {
+  document.getElementById('rsvpOverlay').classList.remove('open');
+}
+function setAttend(val) {
+  attendingChoice = val;
+  document.getElementById('btnYes').className = 'attend-btn' + (val ? ' selected-yes' : '');
+  document.getElementById('btnNo').className  = 'attend-btn' + (!val ? ' selected-no' : '');
+  document.getElementById('guestCountRow').style.display = val ? 'block' : 'none';
+}
+async function submitRSVP() {
+  const name    = document.getElementById('rsvpName').value.trim();
+  const message = document.getElementById('rsvpMsg').value.trim();
+  const guests  = parseInt(document.getElementById('rsvpGuests').value) || 1;
+  if (!name) { document.getElementById('rsvpName').style.borderColor='#e05'; document.getElementById('rsvpName').focus(); return; }
+  if (attendingChoice === null) { showRsvpToast('Παρακαλώ επιλέξτε παρουσία.'); return; }
+  const btn = document.getElementById('rsvpSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Αποστολή…';
+  try {
+    const res = await fetch('/api/rsvp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, attending: attendingChoice, guests, message })
+    });
+    if (res.ok) {
+      document.getElementById('rsvpForm').style.display = 'none';
+      document.getElementById('rsvpSuccess').style.display = 'block';
+      document.getElementById('rsvpSuccessMsg').textContent = attendingChoice
+        ? 'Χαρούμαστε που θα είσαι μαζί μας, ' + name + '!'
+        : 'Λυπόμαστε που δεν θα μπορέσεις να έρθεις, ' + name + '. Ευχαριστούμε που μας ενημέρωσες!';
+    } else {
+      showRsvpToast('Κάτι πήγε λάθος. Δοκίμασε ξανά.');
+      btn.disabled = false; btn.textContent = '💌 Αποστολή RSVP';
+    }
+  } catch {
+    showRsvpToast('Δεν υπάρχει σύνδεση με τον server.');
+    btn.disabled = false; btn.textContent = '💌 Αποστολή RSVP';
+  }
+}
+document.getElementById('rsvpOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeRSVP();
+});
+function showRsvpToast(msg) {
+  const t = document.getElementById('rsvpToast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ── COUNTDOWN ──
+(function countdownTick(){
+  // Wedding: 24 May 2026, 18:00 local Greece time (EEST = UTC+3)
+  const target = new Date('2026-05-24T18:00:00+03:00').getTime();
+  function tick(){
+    const diff = target - Date.now();
+    if(diff <= 0){
+      clearInterval(timer);
+      document.getElementById('countdownWrap').style.display='none';
+      const wrap = document.createElement('div');
+      wrap.className='cd-passed';
+      wrap.textContent='Σήμερα είναι η μεγάλη μέρα! 💜';
+      document.getElementById('countdownWrap').parentNode.insertBefore(wrap, document.getElementById('countdownWrap'));
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cdDays').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cdMins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cdSecs').textContent  = String(s).padStart(2,'0');
+  }
+  tick();
+  const timer = setInterval(tick, 1000);
+})();
+
+// ── WEATHER ──
+// Uses Open-Meteo free API (no key needed).
+// Update LAT/LON below to match the actual venue location.
+(async function loadWeather(){
+  const LAT = 37.97;   // ← update to venue latitude
+  const LON = 23.72;   // ← update to venue longitude
+  const WEDDING = '2026-05-24';
+  const icons = {
+    0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️',
+    45:'🌫️', 48:'🌫️',
+    51:'🌦️', 53:'🌦️', 55:'🌧️', 61:'🌧️', 63:'🌧️', 65:'🌧️',
+    71:'❄️', 73:'❄️', 75:'❄️', 77:'❄️',
+    80:'🌦️', 81:'🌦️', 82:'🌧️',
+    95:'⛈️', 96:'⛈️', 99:'⛈️'
+  };
+  const descs = {
+    0:'Αίθριος ουρανός', 1:'Κυρίως αίθριος', 2:'Μερικώς συννεφιά', 3:'Συννεφιά',
+    45:'Ομίχλη', 48:'Ομίχλη',
+    51:'Ελαφριά ψιχάλα', 53:'Ψιχάλα', 55:'Έντονη ψιχάλα', 61:'Ελαφριά βροχή', 63:'Βροχή', 65:'Έντονη βροχή',
+    71:'Ελαφριά χιονόπτωση', 73:'Χιόνι', 75:'Έντονη χιονόπτωση', 77:'Χαλαζόπτωση',
+    80:'Ντούς', 81:'Ντούς', 82:'Έντονα ντούς',
+    95:'Καταιγίδα', 96:'Καταιγίδα', 99:'Σφοδρή καταιγίδα'
+  };
+  try{
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + LAT +
+      '&longitude=' + LON +
+      '&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max' +
+      '&timezone=Europe%2FAthens&start_date=' + WEDDING + '&end_date=' + WEDDING;
+    const res = await fetch(url);
+    if(!res.ok) return;
+    const data = await res.json();
+    const d = data.daily;
+    if(!d || !d.temperature_2m_max || !d.temperature_2m_max[0]) return;
+    const tMax = Math.round(d.temperature_2m_max[0]);
+    const tMin = Math.round(d.temperature_2m_min[0]);
+    const code = d.weathercode[0];
+    const rain = d.precipitation_probability_max[0];
+    const icon = icons[code] || '🌤️';
+    const desc = descs[code] || 'Μεταβλητός καιρός';
+    document.getElementById('weatherBody').children[0].textContent = icon;
+    document.getElementById('weatherTemp').textContent = tMax + '°C';
+    document.getElementById('weatherRange').textContent = 'min ' + tMin + '°C · βροχή ' + rain + '%';
+    document.getElementById('weatherDesc').textContent = desc;
+    document.getElementById('weatherNote').textContent = 'Πρόγνωση Open-Meteo · ενημερώνεται αυτόματα';
+  } catch(_) {
+    // Fallback: keep the default typical-May display
+  }
+})();
+
+// ── QUIZ ──
+const quizData = [
+  {
+    q: 'Πού γνωρίστηκαν ο Κωνσταντίνος και η Μαρία;',
+    opts: ['Σε πάρτι φίλων', 'Μέσω κοινών γνωστών', 'Στη δουλειά', 'Σε ταξίδι'],
+    correct: 1
+  },
+  {
+    q: 'Πόσα χρόνια είναι μαζί πριν το γάμο;',
+    opts: ['2 χρόνια', '3 χρόνια', '4 χρόνια', '5 χρόνια'],
+    correct: 2
+  },
+  {
+    q: 'Πού έγινε η πρόταση γάμου;',
+    opts: ['Σε εστιατόριο', 'Στην Θάλασσα', 'Στο σπίτι τους', 'Σε ταξίδι εξωτερικού'],
+    correct: 1
+  },
+  {
+    q: 'Ποιο είναι το αγαπημένο πιάτο του Κωνσταντίνου;',
+    opts: ['Πίτσα', 'Σουβλάκι', 'Παστίτσιο', 'Μακαρόνια με γαρίδες'],
+    correct: 3
+  },
+  {
+    q: 'Ποια είναι η αγαπημένη ταινία της Μαρίας;',
+    opts: ['Mamma Mia', 'Titanic', 'La La Land', 'Dirty Dancing'],
+    correct: 2
+  },
+  {
+    q: 'Πού πήγαν για το πρώτο τους ταξίδι ως ζευγάρι;',
+    opts: ['Παρίσι', 'Ρώμη', 'Λονδίνο', 'Βαρκελώνη'],
+    correct: 1
+  },
+  {
+    q: 'Μια δικαιολογία να χάσει κοινωνική υποχρέωση ο Κωνσταντίνος;',
+    opts: ['Αγώνας Ποδοσφαίρου', 'Άρρωστος', 'Το ξέχασε', 'Καμία δικαιολογία'],
+    correct: 0
+  },
+  {
+    q: 'Το αγαπημένο χρώμα της Μαρίας;',
+    opts: ['Πράσινο', 'Μπλε', 'Λιλά', 'Κόκκινο'],
+    correct: 2
+  }
+];
+
+const quizRanks = [
+  { min:0, max:2, icon:'🙈', title:'Αγαπητέ Καλεσμένε\u2026', msg:'Φαίνεται ότι ήρθες για το φαγητό! Και αυτό είναι εντελώς αποδεκτό.' },
+  { min:3, max:4, icon:'💐', title:'Αξιοπρεπής Επίδοση', msg:'Ξέρεις μερικά πράγματα, αλλά μάλλον δεν πρόσεχες πάντα.' },
+  { min:5, max:6, icon:'💜', title:'Αληθινός Φίλος', msg:'Έχεις αφουγκραστεί το ζευγάρι — και αυτοί σε εκτιμούν πολύ γι\u2019 αυτό!' },
+  { min:7, max:8, icon:'👑', title:'Βασιλιάς/Βασίλισσα της Παρέας', msg:'Ξέρεις τα πάντα! Ή μήπως ήσουν παρών στα πάντα; Ύποπτο\u2026 αλλά τέλειο.' }
+];
+
+let quizCurrent = 0, quizScore = 0, quizAnswered = false;
+
+function quizStart() {
+  quizCurrent = 0; quizScore = 0;
+  document.getElementById('quizStartScreen').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizQuestion').style.display = 'block';
+  quizShowQuestion();
+}
+
+function quizShowQuestion() {
+  quizAnswered = false;
+  const q = quizData[quizCurrent];
+  document.getElementById('quizFill').style.width = (quizCurrent / quizData.length * 100) + '%';
+  document.getElementById('quizProgressNum').textContent = (quizCurrent + 1) + ' / ' + quizData.length;
+  document.getElementById('quizQText').textContent = q.q;
+  const optsEl = document.getElementById('quizOpts');
+  while (optsEl.firstChild) { optsEl.removeChild(optsEl.firstChild); }
+  q.opts.forEach(function(opt, i) {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', function() { quizAnswer(i); });
+    optsEl.appendChild(btn);
+  });
+}
+
+function quizAnswer(chosen) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = quizData[quizCurrent];
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(function(b) { b.disabled = true; });
+  btns[chosen].classList.add(chosen === q.correct ? 'correct' : 'wrong');
+  if (chosen !== q.correct) { btns[q.correct].classList.add('reveal'); }
+  if (chosen === q.correct) { quizScore++; }
+  setTimeout(function() {
+    quizCurrent++;
+    if (quizCurrent < quizData.length) { quizShowQuestion(); } else { quizShowResult(); }
+  }, 1100);
+}
+
+function quizShowResult() {
+  document.getElementById('quizFill').style.width = '100%';
+  document.getElementById('quizQuestion').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'block';
+  const rank = quizRanks.find(function(r) { return quizScore >= r.min && quizScore <= r.max; });
+  document.getElementById('quizRankIcon').textContent = rank.icon;
+  document.getElementById('quizRankTitle').textContent = rank.title;
+  document.getElementById('quizScoreLine').textContent = quizScore + ' / ' + quizData.length + ' σωστές απαντήσεις';
+  document.getElementById('quizRankMsg').textContent = rank.msg;
+}
+
+function quizReset() {
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizStartScreen').style.display = 'block';
+}
+</script>
+</body>
+</html>

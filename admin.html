@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root{--lilac:#c4a0d8;--lilac-deep:#9b72bb;--lilac-dark:#7c4fa0;--lilac-pale:#f0e6fa;--lilac-mid:#dfc8f0;--text:#3d2560;--muted:#9b82b8;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:linear-gradient(160deg,#faf4ff 0%,#f0e6fa 45%,#e0cdf5 100%);min-height:100vh;color:var(--text);}
+  header{text-align:center;padding:40px 20px 24px;}
+  .hdr-title{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--lilac-dark);letter-spacing:3px;}
+  .hdr-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--lilac-deep);font-style:italic;margin-top:4px;}
+  .login-wrap{display:flex;align-items:center;justify-content:center;min-height:55vh;}
+  .login-card{background:rgba(255,255,255,.85);backdrop-filter:blur(16px);border-radius:28px;border:1px solid rgba(196,160,216,.3);padding:48px 40px;max-width:380px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(130,80,190,.12);}
+  .login-icon{font-size:3rem;margin-bottom:16px;}
+  .login-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--lilac-dark);letter-spacing:2px;margin-bottom:8px;}
+  .login-sub{font-size:.84rem;color:var(--muted);margin-bottom:28px;}
+  .login-input{width:100%;padding:13px 18px;border:1.5px solid var(--lilac-mid);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--text);outline:none;text-align:center;background:var(--lilac-pale);margin-bottom:16px;transition:border-color .2s;}
+  .login-input:focus{border-color:var(--lilac-deep);}
+  .login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--lilac),var(--lilac-deep));color:#fff;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 20px rgba(155,114,187,.35);transition:all .3s;}
+  .login-btn:hover{transform:translateY(-2px);}
+  .login-error{color:#e04070;font-size:.82rem;margin-top:12px;display:none;}
+  .panel-wrap{display:none;max-width:1100px;margin:0 auto;padding:0 20px 80px;}
+  .panel-wrap.visible{display:block;}
+  .tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
+  .tab{padding:10px 24px;border-radius:50px;cursor:pointer;border:1.5px solid var(--lilac-mid);background:rgba(255,255,255,.5);font-size:.78rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .25s;}
+  .tab.active{background:var(--lilac-deep);color:#fff;border-color:var(--lilac-deep);}
+  .section{display:none;animation:fadeUp .4s ease;}
+  .section.active{display:block;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+  .sec-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--lilac-dark);letter-spacing:2px;}
+  .count-badge{background:rgba(196,160,216,.2);border:1px solid rgba(196,160,216,.3);border-radius:50px;padding:5px 14px;font-size:.78rem;color:var(--lilac-deep);}
+  .card{background:rgba(255,255,255,.75);backdrop-filter:blur(12px);border-radius:18px;border:1px solid rgba(196,160,216,.25);padding:20px 24px;margin-bottom:14px;box-shadow:0 4px 20px rgba(130,80,190,.07);}
+  .card-name{font-weight:500;font-size:.95rem;color:var(--lilac-dark);margin-bottom:4px;}
+  .card-time{font-size:.72rem;color:var(--muted);}
+  .card-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);line-height:1.6;font-style:italic;margin:8px 0;}
+  .card-detail{font-size:.82rem;color:var(--muted);margin-top:4px;}
+  .badge{display:inline-flex;align-items:center;gap:6px;border-radius:50px;padding:3px 12px;font-size:.7rem;letter-spacing:1.5px;font-weight:500;text-transform:uppercase;}
+  .badge-yes{background:rgba(80,200,120,.15);color:#1a8a50;}
+  .badge-no{background:rgba(220,60,80,.12);color:#b03050;}
+  .rsvp-stats{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+  .rsvp-stat{background:rgba(255,255,255,.7);border:1px solid rgba(196,160,216,.28);border-radius:16px;padding:16px 24px;text-align:center;flex:1;min-width:120px;}
+  .rsvp-stat-num{font-family:'Cinzel',serif;font-size:2rem;color:var(--lilac-dark);}
+  .rsvp-stat-lbl{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+  .photo-grid{columns:3 200px;gap:14px;}
+  .photo-item{break-inside:avoid;margin-bottom:14px;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 4px 16px rgba(100,60,150,.1);}
+  .photo-item img{width:100%;display:block;}
+  .photo-meta{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(60,20,100,.75),transparent);padding:10px 12px;color:#fff;}
+  .photo-meta-name{font-size:.78rem;font-weight:500;}
+  .photo-meta-time{font-size:.68rem;opacity:.8;}
+  .del-btn{background:rgba(220,50,80,.3);border:1px solid rgba(220,50,80,.5);border-radius:50px;color:#fff;padding:3px 10px;font-size:.7rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:6px;display:inline-block;}
+  .del-btn:hover{background:rgba(220,50,80,.7);}
+  .wish-card{background:rgba(255,255,255,.75);backdrop-filter:blur(12px);border-radius:18px;border:1px solid rgba(196,160,216,.25);overflow:hidden;margin-bottom:14px;}
+  .wish-type-bar{padding:7px 16px;font-size:.63rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;}
+  .wt-text{background:linear-gradient(90deg,rgba(196,160,216,.2),transparent);color:var(--lilac-deep);}
+  .wt-video{background:linear-gradient(90deg,rgba(220,60,120,.15),transparent);color:#c03070;}
+  .wt-voice{background:linear-gradient(90deg,rgba(80,160,240,.15),transparent);color:#2060c0;}
+  .wt-draw{background:linear-gradient(90deg,rgba(60,200,120,.15),transparent);color:#1a8a50;}
+  .wish-body{padding:14px 18px;}
+  .wish-footer{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid rgba(196,160,216,.2);}
+  .export-btn{padding:9px 22px;border-radius:50px;border:1.5px solid var(--lilac);background:rgba(255,255,255,.6);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--lilac-dark);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+  .export-btn:hover{background:var(--lilac-pale);}
+  .loading,.empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:.9rem;}
+  .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--lilac-dark);color:#fff;padding:11px 26px;border-radius:50px;font-size:.82rem;box-shadow:0 8px 32px rgba(100,60,150,.4);transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:3000;}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-title">Admin Panel</div>
+  <div class="hdr-sub">Konstantinos &amp; Maria</div>
+</header>
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-icon">&#128274;</div>
+    <div class="login-title">Owner Access</div>
+    <div class="login-sub">Enter the owner token shown in the server console to view all content.</div>
+    <input class="login-input" id="tokenInput" type="password" placeholder="Enter owner token" autocomplete="off"/>
+    <button class="login-btn" id="loginBtn">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect token. Please try again.</div>
+  </div>
+</div>
+<div class="panel-wrap" id="panelWrap">
+  <div class="tabs">
+    <button class="tab active" id="tab-rsvp">RSVPs</button>
+    <button class="tab" id="tab-photos">Photos</button>
+    <button class="tab" id="tab-wishes">Wishes</button>
+  </div>
+  <div class="section active" id="section-rsvp">
+    <div class="sec-hdr">
+      <div class="sec-title">RSVP Responses</div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span class="count-badge" id="rsvpCount">-</span>
+        <button class="export-btn" id="exportBtn">Export CSV</button>
+      </div>
+    </div>
+    <div class="rsvp-stats" id="rsvpStats"></div>
+    <div id="rsvpList"><div class="loading">Loading...</div></div>
+  </div>
+  <div class="section" id="section-photos">
+    <div class="sec-hdr">
+      <div class="sec-title">All Photos</div>
+      <span class="count-badge" id="photoCount">-</span>
+    </div>
+    <div class="photo-grid" id="photoGrid"><div class="loading">Loading...</div></div>
+  </div>
+  <div class="section" id="section-wishes">
+    <div class="sec-hdr">
+      <div class="sec-title">All Wishes</div>
+      <span class="count-badge" id="wishCount">-</span>
+    </div>
+    <div id="wishesList"><div class="loading">Loading...</div></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var ownerToken=sessionStorage.getItem('admin_token')||'';
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
+function api(url,opts){opts=opts||{};return fetch(url,Object.assign({},opts,{headers:Object.assign({'X-Owner-Token':ownerToken,'Content-Type':'application/json'},opts.headers||{})}));}
+document.getElementById('loginBtn').addEventListener('click',doLogin);
+document.getElementById('tokenInput').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+function doLogin(){
+  var token=document.getElementById('tokenInput').value.trim();if(!token)return;
+  fetch('/api/rsvp',{headers:{'X-Owner-Token':token}}).then(function(r){
+    if(r.ok){ownerToken=token;sessionStorage.setItem('admin_token',token);initPanel();}
+    else{document.getElementById('loginError').style.display='block';}
+  }).catch(function(){toast('Cannot connect to server.');});
+}
+function initPanel(){document.getElementById('loginWrap').style.display='none';document.getElementById('panelWrap').classList.add('visible');loadAll();}
+if(ownerToken)initPanel();
+['rsvp','photos','wishes'].forEach(function(id){
+  document.getElementById('tab-'+id).addEventListener('click',function(){
+    document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+    document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
+    document.getElementById('section-'+id).classList.add('active');this.classList.add('active');
+  });
+});
+function loadAll(){loadRSVPs();loadPhotos();loadWishes();}
+var rsvps=[];
+function loadRSVPs(){
+  api('/api/rsvp').then(function(r){return r.json();}).then(function(d){rsvps=d;renderRSVPs();}).catch(function(){document.getElementById('rsvpList').textContent='Failed to load.';});
+}
+function renderRSVPs(){
+  var att=rsvps.filter(function(r){return r.attending;}),tot=att.reduce(function(s,r){return s+(r.guests||1);},0);
+  document.getElementById('rsvpCount').textContent=rsvps.length+' responses';
+  var s=document.getElementById('rsvpStats');s.textContent='';
+  [{n:rsvps.length,l:'Total'},{n:att.length,l:'Attending',c:'#1a8a50'},{n:rsvps.length-att.length,l:'Not Attending',c:'#b03050'},{n:tot,l:'Total Guests'}].forEach(function(item){
+    var d=document.createElement('div');d.className='rsvp-stat';
+    var n=document.createElement('div');n.className='rsvp-stat-num';n.textContent=item.n;if(item.c)n.style.color=item.c;
+    var l=document.createElement('div');l.className='rsvp-stat-lbl';l.textContent=item.l;
+    d.appendChild(n);d.appendChild(l);s.appendChild(d);
+  });
+  var list=document.getElementById('rsvpList');list.textContent='';
+  if(!rsvps.length){list.textContent='No RSVPs yet.';return;}
+  rsvps.slice().reverse().forEach(function(r){
+    var card=document.createElement('div');card.className='card';
+    var row=document.createElement('div');row.style.cssText='display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px;';
+    var nm=document.createElement('div');nm.className='card-name';nm.textContent=r.name;
+    var b=document.createElement('span');b.className='badge '+(r.attending?'badge-yes':'badge-no');b.textContent=r.attending?'Attending':'Not attending';
+    row.appendChild(nm);row.appendChild(b);card.appendChild(row);
+    if(r.attending){var dg=document.createElement('div');dg.className='card-detail';dg.textContent='Guests: '+r.guests;card.appendChild(dg);}
+    if(r.dietary){var dd=document.createElement('div');dd.className='card-detail';dd.textContent='Diet: '+r.dietary;card.appendChild(dd);}
+    if(r.message){var dm=document.createElement('div');dm.className='card-text';dm.textContent='"'+r.message+'"';card.appendChild(dm);}
+    var t=document.createElement('div');t.className='card-time';t.textContent=r.time;card.appendChild(t);
+    list.appendChild(card);
+  });
+}
+document.getElementById('exportBtn').addEventListener('click',function(){
+  if(!rsvps.length){toast('No RSVPs to export.');return;}
+  var rows=[['Name','Attending','Guests','Dietary','Message','Time']].concat(rsvps.map(function(r){return[r.name,r.attending?'Yes':'No',r.guests,r.dietary,r.message,r.time];}));
+  var csv=rows.map(function(r){return r.map(function(v){return'"'+String(v||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='rsvps.csv';a.click();
+});
+var photos=[];
+function loadPhotos(){
+  api('/api/media').then(function(r){return r.json();}).then(function(d){photos=d;renderPhotos();}).catch(function(){document.getElementById('photoGrid').textContent='Failed.';});
+}
+function renderPhotos(){
+  document.getElementById('photoCount').textContent=photos.length+' photos';
+  var grid=document.getElementById('photoGrid');grid.textContent='';
+  if(!photos.length){grid.textContent='No photos yet.';return;}
+  photos.forEach(function(p){
+    var item=document.createElement('div');item.className='photo-item';
+    var img=document.createElement('img');img.src=p.url;img.alt='photo';img.loading='lazy';
+    var meta=document.createElement('div');meta.className='photo-meta';
+    var mn=document.createElement('div');mn.className='photo-meta-name';mn.textContent=p.name;
+    var mt=document.createElement('div');mt.className='photo-meta-time';mt.textContent=p.time;
+    var del=document.createElement('button');del.className='del-btn';del.textContent='Delete';
+    (function(pid){del.addEventListener('click',function(){deletePhoto(pid);});})(p.id);
+    meta.appendChild(mn);meta.appendChild(mt);meta.appendChild(del);
+    item.appendChild(img);item.appendChild(meta);grid.appendChild(item);
+  });
+}
+function deletePhoto(id){
+  if(!confirm('Delete this photo?'))return;
+  api('/api/media/'+id,{method:'DELETE',body:'{}'}).then(function(){loadPhotos();toast('Deleted.');}).catch(function(){toast('Failed.');});
+}
+var wishes=[];
+function loadWishes(){
+  api('/api/wishes').then(function(r){return r.json();}).then(function(d){wishes=d;renderWishes();}).catch(function(){document.getElementById('wishesList').textContent='Failed.';});
+}
+function renderWishes(){
+  document.getElementById('wishCount').textContent=wishes.length+' wishes';
+  var list=document.getElementById('wishesList');list.textContent='';
+  if(!wishes.length){list.textContent='No wishes yet.';return;}
+  var labels={text:'Message',video:'Video',voice:'Voice',draw:'Drawing'};
+  var tcls={text:'wt-text',video:'wt-video',voice:'wt-voice',draw:'wt-draw'};
+  wishes.slice().reverse().forEach(function(w){
+    var card=document.createElement('div');card.className='wish-card';
+    var bar=document.createElement('div');bar.className='wish-type-bar '+(tcls[w.type]||'wt-text');bar.textContent=labels[w.type]||w.type;
+    var body=document.createElement('div');body.className='wish-body';
+    if(w.type==='video'&&w.url){var v=document.createElement('video');v.controls=true;v.setAttribute('playsinline','');v.preload='metadata';v.src=w.url;v.style.cssText='width:100%;border-radius:10px;margin-bottom:10px;max-height:280px;background:#1a0a2e;';body.appendChild(v);}
+    else if(w.type==='voice'&&w.url){var au=document.createElement('audio');au.controls=true;au.src=w.url;au.style.cssText='width:100%;margin-bottom:10px;';body.appendChild(au);}
+    else if(w.type==='draw'&&w.url){var im=document.createElement('img');im.src=w.url;im.alt='Drawing';im.style.cssText='width:100%;border-radius:10px;margin-bottom:10px;';body.appendChild(im);}
+    if(w.msg){var tx=document.createElement('div');tx.className='card-text';tx.textContent='"'+w.msg+'"';body.appendChild(tx);}
+    var footer=document.createElement('div');footer.className='wish-footer';
+    var info=document.createElement('div');
+    var wn=document.createElement('div');wn.className='card-name';wn.textContent=w.name;
+    var wt=document.createElement('div');wt.className='card-time';wt.textContent=w.time;
+    var dl=document.createElement('button');dl.className='del-btn';dl.textContent='Delete';
+    (function(wid){dl.addEventListener('click',function(){deleteWish(wid);});})(w.id);
+    info.appendChild(wn);info.appendChild(wt);footer.appendChild(info);footer.appendChild(dl);
+    card.appendChild(bar);card.appendChild(body);card.appendChild(footer);list.appendChild(card);
+  });
+}
+function deleteWish(id){
+  if(!confirm('Delete this wish?'))return;
+  api('/api/wishes/'+id,{method:'DELETE',body:'{}'}).then(function(){loadWishes();toast('Deleted.');}).catch(function(){toast('Failed.');});
+}
+</script>
+</body>
+</html>
