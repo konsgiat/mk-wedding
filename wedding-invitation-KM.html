@@ -24,6 +24,9 @@
     min-height:100vh;
     color: var(--text);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* ── FLOATING PARTICLES ── */
@@ -105,9 +108,9 @@
 
   /* Date block */
   .date-block  { text-align:center; margin-bottom:24px; }
-  .date-month  { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--lilac-dark); letter-spacing:3px; margin-bottom:2px; }
+  .date-month  { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--lilac-dark); letter-spacing:3px; margin-bottom:2px; text-align:center; display:block; width:100%; }
   .date-row    { display:flex; align-items:center; justify-content:center; gap:22px; margin:4px 0; }
-  .date-day    { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; color:var(--lilac-dark); letter-spacing:1px; }
+  .date-day    { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; color:var(--lilac-dark); letter-spacing:1px; border-bottom:1.5px solid var(--lilac); padding-bottom:3px; }
   .date-num    { font-family:'Cinzel',serif; font-size:2.8rem; font-weight:700; color:var(--lilac-dark); line-height:1; }
   .date-time-val { font-family:'Cormorant Garamond',serif; font-size:1.65rem; font-weight:500; color:var(--lilac-dark); border-bottom:1.5px solid var(--lilac); padding-bottom:3px; letter-spacing:2px; }
   .date-year   { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--lilac-dark); letter-spacing:3px; margin-top:2px; }
@@ -136,13 +139,13 @@
     border:1px solid rgba(180,130,220,.32); border-radius:50px;
     padding:10px 22px; margin-bottom:8px;
     font-family:'Lato',sans-serif; font-size:.74rem;
-    letter-spacing:3px; text-transform:uppercase; color:var(--lilac-dark); font-weight:400;
+    letter-spacing:3px; color:var(--lilac-dark); font-weight:400;
   }
   .dc-swatch { width:18px; height:18px; border-radius:50%; background:linear-gradient(135deg,#c9aaeb,#9b72bb); box-shadow:0 2px 8px rgba(155,90,210,.35); flex-shrink:0; }
   .dresscode-note { font-family:'Lato',sans-serif; font-size:.7rem; color:var(--lilac); letter-spacing:1.5px; margin-bottom:28px; font-weight:300; }
 
   /* RSVP */
-  .rsvp-label { font-family:'Lato',sans-serif; color:var(--muted); font-size:.74rem; letter-spacing:3px; text-transform:uppercase; font-weight:300; margin-bottom:14px; }
+  .rsvp-label { font-family:'Lato',sans-serif; color:var(--muted); font-size:.74rem; letter-spacing:3px; font-weight:300; margin-bottom:14px; }
   .rsvp-btn {
     background:linear-gradient(135deg,var(--lilac),var(--lilac-deep),var(--lilac-dark));
     color:#fff; border:none; border-radius:50px; padding:15px 44px;
@@ -227,8 +230,8 @@
   }
   /* Question */
   .quiz-q {
-    font-family:'Cinzel',serif;
-    font-size:1rem;
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.1rem;
     color:var(--text);
     letter-spacing:.5px;
     line-height:1.55;
@@ -386,7 +389,7 @@
   }
   .cd-label {
     font-family:'Lato',sans-serif; font-size:.58rem; letter-spacing:2.5px;
-    text-transform:uppercase; color:var(--muted); margin-top:4px; font-weight:300;
+    color:var(--muted); margin-top:4px; font-weight:300;
   }
   .cd-passed {
     font-family:'Cormorant Garamond',serif; font-style:italic;
@@ -425,7 +428,8 @@
   @media(max-width:500px) {
     .invite-card { padding:40px 22px 36px; }
     .apps-section { grid-template-columns:1fr; }
-    .names { font-size:1.1rem; letter-spacing:3px; }
+    .names { font-size:1.1rem; letter-spacing:3px; display:flex; flex-direction:column; align-items:center; gap:2px; }
+    .names .amp { display:block; margin:0; font-size:1.3rem; }
     .rsvp-modal { padding:32px 22px; }
     .cd-block { min-width:52px; padding:10px 10px; }
     .cd-num { font-size:1.35rem; }
@@ -484,7 +488,7 @@ for(let i=0;i<26;i++){
 
     <!-- Monogram -->
     <div class="monogram">
-      <span>K</span><span class="heart">♡</span><span class="m">M</span>
+      <span class="m">K</span><span class="heart">♡</span><span class="m">M</span>
     </div>
 
     <!-- Couple illustration -->
@@ -516,8 +520,10 @@ for(let i=0;i<26;i++){
     <div class="people-section">
       <div class="people-title">Γονείς</div>
       <div class="people-grid">
-        <div class="people-name">Αθανάσιος Γιάτσιος<br/>Μαρία Καρακίζη</div>
-        <div class="people-name">Αναστάσιος Χρυσάφης<br/>Πολυξένη Κυριακίδου</div>
+        <div class="people-name">Αθανάσιος Γιάτσιος</div>
+        <div class="people-name">Μαρία Καρακίζη</div>
+        <div class="people-name">Αναστάσιος Χρυσάφης</div>
+        <div class="people-name">Πολυξένη Κυριακίδου</div>
       </div>
     </div>
 
@@ -534,10 +540,10 @@ for(let i=0;i<26;i++){
 
     <!-- Countdown -->
     <div class="countdown-wrap" id="countdownWrap">
-      <div class="cd-block"><div class="cd-num" id="cdDays">--</div><div class="cd-label">Ημέρες</div></div>
-      <div class="cd-block"><div class="cd-num" id="cdHours">--</div><div class="cd-label">Ώρες</div></div>
-      <div class="cd-block"><div class="cd-num" id="cdMins">--</div><div class="cd-label">Λεπτά</div></div>
-      <div class="cd-block"><div class="cd-num" id="cdSecs">--</div><div class="cd-label">Δευτ/πτα</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdDays">--</div><div class="cd-label">ΗΜΕΡΕΣ</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdHours">--</div><div class="cd-label">ΩΡΕΣ</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdMins">--</div><div class="cd-label">ΛΕΠΤΑ</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdSecs">--</div><div class="cd-label">ΔΕΥΤ/ΠΤΑ</div></div>
     </div>
 
     <!-- Info -->
@@ -567,7 +573,7 @@ for(let i=0;i<26;i++){
     <!-- Dress code -->
     <div class="dresscode">
       <div class="dc-swatch"></div>
-      Dress Code: Φορέστε κάτι Λιλά
+      DRESS CODE · ΦΟΡΕΣΤΕ ΚΑΤΙ ΛΙΛΑ
     </div>
     <div class="dresscode-note">Προαιρετική παράκληση νύφης ✦</div>
 
@@ -607,7 +613,7 @@ for(let i=0;i<26;i++){
     </div>
 
     <!-- RSVP -->
-    <p class="rsvp-label">RSVP μέχρι τις 10 Μαΐου 2026</p>
+    <p class="rsvp-label">RSVP ΜΕΧΡΙ ΤΙΣ 10 ΜΑΙΟΥ 2026</p>
     <button class="rsvp-btn" onclick="openRSVP()">✨ &nbsp; Απαντήστε εδώ</button>
 
     <!-- Footer -->
