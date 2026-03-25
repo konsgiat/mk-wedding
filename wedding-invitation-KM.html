@@ -110,9 +110,10 @@
   .date-block  { text-align:center; margin-bottom:24px; }
   .date-month  { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--lilac-dark); letter-spacing:3px; margin-bottom:2px; text-align:center; display:block; width:100%; }
   .date-row    { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; margin:4px 0; gap:0; }
-  .date-day    { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; color:var(--lilac-dark); letter-spacing:1px; border-bottom:1.5px solid var(--lilac); padding-bottom:3px; text-align:right; padding-right:18px; }
+  .date-day    { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; color:var(--lilac-dark); letter-spacing:1px; text-align:right; padding-right:18px; }
+  .date-day span, .date-time-val span { border-bottom:1.5px solid var(--lilac); padding-bottom:3px; display:inline-block; }
   .date-num    { font-family:'Cinzel',serif; font-size:2.8rem; font-weight:700; color:var(--lilac-dark); line-height:1; text-align:center; }
-  .date-time-val { font-family:'Cormorant Garamond',serif; font-size:1.65rem; font-weight:500; color:var(--lilac-dark); border-bottom:1.5px solid var(--lilac); padding-bottom:3px; letter-spacing:2px; text-align:left; padding-left:18px; }
+  .date-time-val { font-family:'Cormorant Garamond',serif; font-size:1.65rem; font-weight:500; color:var(--lilac-dark); letter-spacing:2px; text-align:left; padding-left:18px; }
   .date-year   { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--lilac-dark); letter-spacing:3px; margin-top:2px; }
 
   /* Γονείς / Κουμπάρες */
@@ -508,9 +509,9 @@ for(let i=0;i<26;i++){
     <div class="date-block">
       <div class="date-month">Μάιος</div>
       <div class="date-row">
-        <span class="date-day">Κυριακή</span>
+        <span class="date-day"><span>Κυριακή</span></span>
         <span class="date-num">24</span>
-        <span class="date-time-val">18:00</span>
+        <span class="date-time-val"><span>18:00</span></span>
       </div>
       <div class="date-year">2026</div>
     </div>
