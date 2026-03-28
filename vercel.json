@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/wedding-invitation-KM.html" },
-    { "source": "/wishwall", "destination": "/wishwall.html" }
+    { "source": "/wishwall", "destination": "/wishwall.html" },
+    { "source": "/admin", "destination": "/admin.html" }
   ]
 }
