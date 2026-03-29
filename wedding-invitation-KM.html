@@ -597,10 +597,26 @@ for(let i=0;i<26;i++){
         <span class="iban-label">IBAN</span>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
           <span class="iban-value" id="ibanNumber" style="word-break:break-all;letter-spacing:2px;">GR33 0172 2560 0052 5609 1138 894</span>
-          <button class="iban-copy" onclick="copyIBAN()">📋 Αντιγραφή</button>
+          <button class="iban-copy" onclick="copyIBAN('ibanNumber')">📋 Αντιγραφή</button>
         </div>
       </div>
-      <div class="iban-note">Αν επιθυμείτε να μας χαρίσετε κάτι, η μεγαλύτερη χαρά μας είναι η παρουσία σας · Αν θέλετε να συνεισφέρετε στο ταξίδι μας, μπορείτε να κάνετε κατάθεση στον παραπάνω λογαριασμό ✦</div>
+      <div style="border-top:1px solid rgba(180,130,220,.25);margin:16px 0;"></div>
+      <div class="iban-row">
+        <span class="iban-label">Τράπεζα</span>
+        <span class="iban-value">PIRAEUS BANK SA</span>
+      </div>
+      <div class="iban-row">
+        <span class="iban-label">Δικαιούχος</span>
+        <span class="iban-value">Κωνσταντίνος Γιάτσιος</span>
+      </div>
+      <div class="iban-row" style="flex-direction:column;gap:6px;">
+        <span class="iban-label">IBAN</span>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span class="iban-value" id="ibanNumber2" style="word-break:break-all;letter-spacing:2px;">GR45 0172 2570 0052 5706 3583 404</span>
+          <button class="iban-copy" onclick="copyIBAN('ibanNumber2')">📋 Αντιγραφή</button>
+        </div>
+      </div>
+      <div class="iban-note">Αν επιθυμείτε να μας χαρίσετε κάτι, η μεγαλύτερη χαρά μας είναι η παρουσία σας · Αν θέλετε να συνεισφέρετε στο ταξίδι μας, μπορείτε να κάνετε κατάθεση σε έναν από τους παραπάνω λογαριασμούς ✦</div>
     </div>
 
     <!-- Weather -->
@@ -769,12 +785,13 @@ function openApp(id) {
 }
 
 // ── IBAN copy ──
-function copyIBAN() {
-  const iban = document.getElementById('ibanNumber').textContent.replace(/\s/g,'');
+function copyIBAN(id) {
+  const el = document.getElementById(id);
+  const iban = el.textContent.replace(/\s/g,'');
   navigator.clipboard.writeText(iban).then(() => {
     showRsvpToast('IBAN αντιγράφηκε! 📋');
   }).catch(() => {
-    showRsvpToast('Αντιγράψτε: ' + document.getElementById('ibanNumber').textContent);
+    showRsvpToast('Αντιγράψτε: ' + el.textContent);
   });
 }
 
@@ -818,7 +835,7 @@ async function submitRSVP() {
       document.getElementById('rsvpForm').style.display = 'none';
       document.getElementById('rsvpSuccess').style.display = 'block';
       document.getElementById('rsvpSuccessMsg').textContent = attendingChoice
-        ? 'Χαρούμαστε που θα είσαι μαζί μας, ' + name + '!'
+        ? 'Χαιρόμαστε που θα είσαι μαζί μας, ' + name + '!'
         : 'Λυπόμαστε που δεν θα μπορέσεις να έρθεις, ' + name + '. Ευχαριστούμε που μας ενημέρωσες!';
     } else {
       showRsvpToast('Κάτι πήγε λάθος. Δοκίμασε ξανά.');
