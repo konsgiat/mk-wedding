@@ -177,7 +177,20 @@ function getLocalIP() {
 async function handleRequest(req, res) {
   let urlPath = req.url.split('?')[0];
   if (urlPath.startsWith('/api/')) { await handleAPI(req, res, urlPath); return; }
+
+  const cleanRedirects = {
+    '/wedding-invitation-KM.html': '/',
+    '/wishwall.html': '/wishwall',
+  };
+  if (cleanRedirects[urlPath]) {
+    res.writeHead(301, { Location: cleanRedirects[urlPath] });
+    res.end();
+    return;
+  }
+
   if (urlPath === '/' || urlPath === '') urlPath = '/wedding-invitation-KM.html';
+  else if (urlPath === '/wishwall') urlPath = '/wishwall.html';
+  else if (urlPath === '/admin') urlPath = '/admin.html';
 
   const filePath = path.join(__dirname, urlPath);
   if (!path.resolve(filePath).startsWith(path.resolve(__dirname))) {
@@ -228,8 +241,8 @@ function startServer(port) {
     console.log('');
     console.log('  Pages:');
     console.log(`       Invitation  →  https://${ip}${p}/`);
-    console.log(`       WishWall    →  https://${ip}${p}/wishwall.html`);
-    console.log(`       Admin Panel →  https://${ip}${p}/admin.html`);
+    console.log(`       WishWall    →  https://${ip}${p}/wishwall`);
+    console.log(`       Admin Panel →  https://${ip}${p}/admin`);
     console.log('');
     console.log(`  🔑  Owner token: ${OWNER_TOKEN}`);
     console.log('       Enter this on the Admin Panel to see all content.');

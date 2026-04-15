@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/wedding-invitation-KM.html", "destination": "/", "permanent": true },
+    { "source": "/wishwall.html", "destination": "/wishwall", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/wedding-invitation-KM.html" },
     { "source": "/wishwall", "destination": "/wishwall.html" },

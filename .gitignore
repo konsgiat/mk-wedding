@@ -4,3 +4,5 @@ key.pem
 .env
 .env.local
 data.json
+.claude/
+.serena/
